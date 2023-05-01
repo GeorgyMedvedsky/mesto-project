@@ -1,0 +1,5 @@
+.profile__name-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+}

@@ -1,0 +1,6 @@
+.like-button{
+    cursor: pointer;
+}
+.like-button:hover{
+    opacity: .5;
+}

@@ -1,0 +1,11 @@
+.edit-button{
+    background: #000;
+    border: 1px solid #FFFFFF;
+    padding: 5px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

@@ -1,0 +1,5 @@
+.card__info{
+    padding: 26px 15px 30px;
+    display: flex;
+    justify-content: space-between;
+}
