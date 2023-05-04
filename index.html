@@ -10,13 +10,23 @@
 </head>
 <body>
     <div class="page">
+        <div class="popup">
+            <div class="popup__container">
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <form class="popup__form">
+                    <input class="popup__input" type="text" id="name" name="name" value="Жак-Ив Кусто">
+                    <input class="popup__input" type="text" id="job" name="job" value="Исследователь океана">
+                    <input class="popup__submit" type="submit" id="submit" name="submit" value="Сохранить">
+                </form>
+                <button class="popup__close-button"></button>
+            </div>
+        </div>
         <header class="header">
             <a href="#" class="header__link">
                 <img src="./images/logo.svg" alt="Логотип" class="logo">
             </a>
         </header>
         <main class="content">
-            
             <section class="profile">
                 <div class="profile__info">
                     <img src="./images/avatar.jpg" alt="Аватар пользователя" class="profile__avatar">
@@ -47,7 +57,7 @@
                 <div class="card">
                     <img src="./images/elbrus.jpg" alt="Эльбрус" class="card__image">
                     <div class="card__info">
-                        <h2 class="card__name">Эльбрус</h2>
+                        <h2 class="card__name">Гора Эльбрус</h2>
                         <button class="like-button">
                             <img src="./images/like-button_disabled.svg" alt="Кнопка лайка">
                         </button>
@@ -65,7 +75,7 @@
                 <div class="card">
                     <img src="./images/elbrus.jpg" alt="Эльбрус" class="card__image">
                     <div class="card__info">
-                        <h2 class="card__name">Эльбрус</h2>
+                        <h2 class="card__name">Гора Эльбрус</h2>
                         <button class="like-button">
                             <img src="./images/like-button_disabled.svg" alt="Кнопка лайка">
                         </button>
@@ -83,7 +93,7 @@
                 <div class="card">
                     <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="card__image">
                     <div class="card__info">
-                        <h2 class="card__name">Карачаевск</h2>
+                        <h2 class="card__name">Карачаево-Черкесия</h2>
                         <button class="like-button">
                             <img src="./images/like-button_disabled.svg" alt="Кнопка лайка">
                         </button>
