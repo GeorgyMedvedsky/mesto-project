@@ -1,5 +1,9 @@
 .like-button{
     cursor: pointer;
+    transition: opacity .3s;
+}
+.like-button::after{
+    content: url('../../images/like-button_disabled.svg');
 }
 .like-button:hover{
     opacity: .5;

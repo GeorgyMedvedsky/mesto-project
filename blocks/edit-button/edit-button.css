@@ -1,5 +1,5 @@
 .edit-button{
-    background: #000;
+    background: url('../../images/edit-button.svg') no-repeat center;
     border: 1px solid #FFFFFF;
     padding: 5px;
     width: 18px;
@@ -14,5 +14,6 @@
     .edit-button{
         width: 24px;
         height: 24px;
+        padding: 7px;
     }
 }
