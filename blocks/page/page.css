@@ -4,3 +4,15 @@
     padding: 28px 0 36px;
     min-width: 320px;
 }
+
+@media screen and (min-width: 1024px) {
+    .page{
+        padding: 45px calc((50% - 512px) + 19px) 60px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .page{
+        padding: 45px calc((50% - 640px) + 200px) 60px;
+    }
+}
