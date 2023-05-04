@@ -9,3 +9,10 @@
     align-items: center;
     cursor: pointer;
 }
+
+@media screen and (min-width: 1024px) {
+    .edit-button{
+        width: 24px;
+        height: 24px;
+    }
+}

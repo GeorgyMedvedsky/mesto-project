@@ -2,7 +2,13 @@
     padding: 17px 0;
     border: 2px solid #FFFFFF;
     border-radius: 2px;
-    width: 100%;
+    width: 282px;
     background-color: #000;
     cursor: pointer;
+}
+
+@media screen and (min-width: 1024px) {
+    .add-button{
+        width: 150px;
+    }
 }

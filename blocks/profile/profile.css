@@ -4,3 +4,11 @@
     flex-direction: column;
     align-items: center;
 }
+
+@media screen and (min-width: 1024px) {
+    .profile{
+        padding-bottom: 50px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
