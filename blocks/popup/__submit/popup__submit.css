@@ -10,6 +10,12 @@
     text-align: center;
     color: #FFFFFF;
     padding: 14px 0;
+    transition: opacity .3s;
+    cursor: pointer;
+}
+
+.popup__submit:hover{
+    opacity: .8;
 }
 
 @media screen and (min-width: 1024px) {

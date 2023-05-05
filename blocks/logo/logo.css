@@ -1,6 +1,12 @@
 .logo{
     width: 104px;
     height: 24px;
+    transition: opacity .3s;
+    cursor: pointer;
+}
+
+.logo:hover{
+    opacity: .5;
 }
 
 @media screen and (min-width: 768px) {
