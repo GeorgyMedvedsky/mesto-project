@@ -13,12 +13,12 @@
         <div class="popup">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <form class="popup__form">
+                <form name="edit-form" class="popup__form">
                     <input class="popup__input" type="text" id="name" name="name" value="Жак-Ив Кусто">
                     <input class="popup__input" type="text" id="job" name="job" value="Исследователь океана">
                     <input class="popup__submit" type="submit" id="submit" name="submit" value="Сохранить">
                 </form>
-                <button class="popup__close-button"></button>
+                <button type="reset" class="popup__close-button"></button>
             </div>
         </div>
         <header class="header">
@@ -29,60 +29,62 @@
         <main class="content">
             <section class="profile">
                 <div class="profile__info">
-                    <img src="./images/avatar.jpg" alt="Аватар пользователя" class="profile__avatar">
+                    <img src="./images/avatar.jpg" alt="Аватар пользователя" class="profile__avatar"> 
                     <div class="profile__text">
                         <div class="profile__name-container">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
-                            <button class="edit-button"></button>
+                            <button type="button" class="edit-button"></button>
                         </div>
                         <p class="profile__job">Исследователь океана</p>
                     </div>
                 </div>
-                <button class="add-button"></button>
+                <button type="button" class="add-button"></button>
             </section>
             <section class="cards">
-                <div class="card">
-                    <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="card__image">
-                    <div class="card__info">
-                        <h2 class="card__name">Карачаевск</h2>
-                        <button class="like-button"></button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="./images/elbrus.jpg" alt="Эльбрус" class="card__image">
-                    <div class="card__info">
-                        <h2 class="card__name">Гора Эльбрус</h2>
-                        <button class="like-button"></button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="./images/dombay.jpg" alt="Домбай" class="card__image">
-                    <div class="card__info">
-                        <h2 class="card__name">Домбай</h2>
-                        <button class="like-button"></button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="./images/elbrus.jpg" alt="Эльбрус" class="card__image">
-                    <div class="card__info">
-                        <h2 class="card__name">Гора Эльбрус</h2>
-                        <button class="like-button"></button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="./images/dombay.jpg" alt="Домбай" class="card__image">
-                    <div class="card__info">
-                        <h2 class="card__name">Домбай</h2>
-                        <button class="like-button"></button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="card__image">
-                    <div class="card__info">
-                        <h2 class="card__name">Карачаево-Черкесия</h2>
-                        <button class="like-button"></button>
-                    </div>
-                </div>
+                <ul class="cards__list">
+                    <li class="card">
+                        <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="card__image">
+                        <div class="card__info">
+                            <h2 class="card__name">Карачаевск</h2>
+                            <button type="button" class="like-button"></button>
+                        </div>
+                    </li>
+                    <li class="card">
+                        <img src="./images/elbrus.jpg" alt="Эльбрус" class="card__image">
+                        <div class="card__info">
+                            <h2 class="card__name">Гора Эльбрус</h2>
+                            <button type="button" class="like-button"></button>
+                        </div>
+                    </li>
+                    <li class="card">
+                        <img src="./images/dombay.jpg" alt="Домбай" class="card__image">
+                        <div class="card__info">
+                            <h2 class="card__name">Домбай</h2>
+                            <button type="button" class="like-button"></button>
+                        </div>
+                    </li>
+                    <li class="card">
+                        <img src="./images/elbrus.jpg" alt="Эльбрус" class="card__image">
+                        <div class="card__info">
+                            <h2 class="card__name">Гора Эльбрус</h2>
+                            <button type="button" class="like-button"></button>
+                        </div>
+                    </li>
+                    <li class="card">
+                        <img src="./images/dombay.jpg" alt="Домбай" class="card__image">
+                        <div class="card__info">
+                            <h2 class="card__name">Домбай</h2>
+                            <button type="button" class="like-button"></button>
+                        </div>
+                    </li>
+                    <li class="card">
+                        <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="card__image">
+                        <div class="card__info">
+                            <h2 class="card__name">Карачаево-Черкесия</h2>
+                            <button type="button" class="like-button"></button>
+                        </div>
+                    </li>
+                </ul>
             </section>
         </main>
         <footer class="footer">

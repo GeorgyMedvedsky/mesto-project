@@ -1,4 +1,7 @@
 .add-button{
+    padding: 0;
+    border: none;
+    background: none;
     padding: 25px;
     border: 2px solid #FFFFFF;
     border-radius: 2px;

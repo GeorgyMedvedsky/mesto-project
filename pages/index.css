@@ -9,6 +9,7 @@
 
 /* Header */
 @import url(../blocks/header/header.css);
+@import url(../blocks/header/__link/header__link.css);
 
 /* Logo */
 @import url(../blocks/logo/logo.css);
@@ -26,7 +27,7 @@
 @import url(../blocks/profile/__job/profile__job.css);
 
 /* Cards */
-@import url(../blocks/cards/cards.css);
+@import url(../blocks/cards/__list/cards__list.css);
 
 /* Card */
 @import url(../blocks/card/card.css);
