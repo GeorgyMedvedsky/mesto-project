@@ -10,13 +10,24 @@
 </head>
 <body>
     <div class="page">
-        <div class="popup">
+        <div class="popup popup-profile">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <form name="edit-form" class="popup__form">
-                    <input class="popup__input popup__input_type_name" type="text" id="name" name="name" value="Жак-Ив Кусто">
-                    <input class="popup__input popup__input_type_job" type="text" id="job" name="job" value="Исследователь океана">
+                    <input class="popup__input popup__input_type_name" type="text" id="name" name="name">
+                    <input class="popup__input popup__input_type_job" type="text" id="job" name="job">
                     <input class="popup__submit" type="submit" id="submit" name="submit" value="Сохранить">
+                </form>
+                <button type="button" class="popup__close-button"></button>
+            </div>
+        </div>
+        <div class="popup popup-new-place">
+            <div class="popup__container">
+                <h2 class="popup__title">Новое место</h2>
+                <form name="edit-form" class="popup__form">
+                    <input class="popup__input popup__input_type_place" type="text" id="name" name="name" placeholder="Название">
+                    <input class="popup__input popup__input_type_link" type="text" id="link" name="link" placeholder="Ссылка на картинку">
+                    <input class="popup__submit" type="submit" id="submit" name="submit" value="Создать">
                 </form>
                 <button type="button" class="popup__close-button"></button>
             </div>
@@ -91,6 +102,15 @@
             <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
         </footer>
     </div>
+    <temlate id="card">
+        <li class="card">
+            <img class="card__image">
+            <div class="card__info">
+                <h2 class="card__name"></h2>
+                <button type="button" class="like-button"></button>
+            </div>
+        </li>
+    </temlate>
     <script src="./scripts/index.js"></script>
 </body>
 </html>
