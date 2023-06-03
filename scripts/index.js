@@ -17,7 +17,7 @@ const addButton = page.querySelector('.add-button');
 const profileName = page.querySelector('.profile__name');
 const profileJob = page.querySelector('.profile__job');
 
-const cardTemplate = document.querySelector('#card');
+const cardTemplate = document.querySelector('#card').content;
 const cardsContainer = document.querySelector('.cards__list');
 
 for(let j = 0; j < popups.length; j++) {
@@ -42,6 +42,16 @@ function setSubmitButton(popupElement) {
     for(let i = 0; i < submitButtons.length; i++) {
         submitButtons[i].addEventListener('click', () => closePopup(popupElement));
     }
+}
+function setDeleteButton() {
+    const deleteButtons = page.querySelectorAll('.delete-button');
+    for(let i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener('click', () => deleteCard(deleteButtons[i]));
+    }
+}
+function deleteCard(deleteButton) {
+    let cardItem = deleteButton.closest('.card');
+    cardItem.remove();
 }
 function handleFormSubmitForProfile(evt) {
     evt.preventDefault();
@@ -73,4 +83,5 @@ addButton.addEventListener('click', () => {
     linkInput.value = '';
 });
 formElementForProfile.addEventListener('submit', handleFormSubmitForProfile);
-formElementForPlace.addEventListener('submit', handleFormSubmitForPlace)
+formElementForPlace.addEventListener('submit', handleFormSubmitForPlace);
+setDeleteButton();
