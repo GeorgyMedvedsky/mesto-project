@@ -29,7 +29,7 @@
                 </div>
                 <button type="button" class="add-button"></button>
             </section>
-            <section class="cards">
+            <section class="cards" aria-label="Карточки">
                 <ul class="cards__list"></ul>
             </section>
         </main>
@@ -42,7 +42,7 @@
                 <form name="edit-form" class="popup__form">
                     <input class="popup__input popup__input_type_name" type="text" id="name" name="name">
                     <input class="popup__input popup__input_type_job" type="text" id="job" name="job">
-                    <input class="popup__submit" type="submit" id="submit" name="submit" value="Сохранить">
+                    <input class="popup__submit" type="submit" id="profile-submit" name="profile-submit" value="Сохранить">
                 </form>
                 <button type="button" class="popup__close-button"></button>
             </div>
@@ -51,9 +51,9 @@
             <div class="popup__container">
                 <h2 class="popup__title">Новое место</h2>
                 <form name="edit-form" class="popup__form">
-                    <input class="popup__input popup__input_type_place" type="text" id="name" name="name" placeholder="Название">
-                    <input class="popup__input popup__input_type_link" type="text" id="link" name="link" placeholder="Ссылка на картинку">
-                    <input class="popup__submit" type="submit" id="submit" name="submit" value="Создать">
+                    <input class="popup__input popup__input_type_place" type="text" id="place-name" name="place-name" placeholder="Название">
+                    <input class="popup__input popup__input_type_link" type="text" id="place-link" name="place-link" placeholder="Ссылка на картинку">
+                    <input class="popup__submit" type="submit" id="place-submit" name="place-submit" value="Создать">
                 </form>
                 <button type="button" class="popup__close-button"></button>
             </div>
@@ -61,7 +61,7 @@
         <div class="popup popup-photo">
             <div class="popup__photo-container">
                 <figure class="popup__photo">
-                    <img src="" alt="" class="popup__img">
+                    <img class="popup__img" src="#" alt=" ">
                     <figcaption class="popup__description"></figcaption>
                 </figure>
                 <button type="button" class="popup__close-button"></button>
