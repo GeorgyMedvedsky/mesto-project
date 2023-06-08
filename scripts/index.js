@@ -1,3 +1,30 @@
+const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
+
 const page = document.querySelector('.page');
 const popups = page.querySelectorAll('.popup');
 //Popup for profile
@@ -18,12 +45,7 @@ const profileName = page.querySelector('.profile__name');
 const profileJob = page.querySelector('.profile__job');
 
 const cardTemplate = document.querySelector('#card').content;
-const cardsContainer = document.querySelector('.cards__list');
-
-popups.forEach(item => {
-    setCloseButton(item);
-    setSubmitButton(item);
-});
+const cardsContainer = page.querySelector('.cards__list');
 
 function openPopup(popup){
     popup.classList.add('popup_opened');
@@ -31,8 +53,8 @@ function openPopup(popup){
 function closePopup(popup){
     popup.classList.remove('popup_opened');
 }
-function deleteCard(deleteButton) {
-    const cardItem = deleteButton.closest('.card');
+function deleteCard(button) {
+    const cardItem = button.closest('.card');
     cardItem.remove();
 }
 function setCloseButton(popup) {
@@ -43,16 +65,15 @@ function setSubmitButton(popup) {
     const submitButtons = page.querySelectorAll('.popup__submit');
     submitButtons.forEach(item => item.addEventListener('click', () => closePopup(popup)));
 }
-function setDeleteButton() {
-    const deleteButtons = page.querySelectorAll('.delete-button');
-    for(let i = 0; i < deleteButtons.length; i++) {
-        deleteButtons[i].addEventListener('click', () => deleteCard(deleteButtons[i]));
-    }
+function setDeleteButton(card) {
+    const buttonItem = card.querySelector('.delete-button');
+    buttonItem.addEventListener('click', () => deleteCard(buttonItem));
 }
 function createCard(placeName, link) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     cardElement.querySelector('.card__name').textContent = placeName;
     cardElement.querySelector('.card__image').src = link;
+    setDeleteButton(cardElement);
     return cardElement;
 }
 function renderCard(cardItem){
@@ -70,7 +91,12 @@ function handleFormSubmitForPlace(evt) {
     linkInput.value = '';
 }
 
-//Handlers
+initialCards.forEach(card => renderCard(createCard(card.name, card.link)));
+popups.forEach(item => {
+    setCloseButton(item);
+    setSubmitButton(item);
+});
+
 editButton.addEventListener('click', () => {
     openPopup(popupForProfile);
     nameInput.value = profileName.textContent;
@@ -83,4 +109,3 @@ addButton.addEventListener('click', () => {
 });
 formElementForProfile.addEventListener('submit', handleFormSubmitForProfile);
 formElementForPlace.addEventListener('submit', handleFormSubmitForPlace);
-setDeleteButton();
