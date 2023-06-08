@@ -37,6 +37,10 @@ const popupForPlace = page.querySelector('.popup-new-place');
 const formElementForPlace = popupForPlace.querySelector('.popup__form');
 const placeNameInput = formElementForPlace.querySelector('.popup__input_type_place');
 const linkInput = formElementForPlace.querySelector('.popup__input_type_link');
+//Popup for photo
+const popupForPhoto = page.querySelector('.popup-photo');
+const popupImg = popupForPhoto.querySelector('.popup__img');
+const popupDescription = popupForPhoto.querySelector('.popup__description');
 
 const editButton = page.querySelector('.edit-button');
 const addButton = page.querySelector('.add-button');
@@ -60,6 +64,12 @@ function deleteCard(button) {
 function likeCard(button) {
     button.classList.toggle('like-button_active');
 }
+function showPhoto(cardImage) {
+    popupImg.src = cardImage.src;
+    popupImg.alt = cardImage.alt;
+    popupDescription.textContent = cardImage.alt;
+    openPopup(popupForPhoto);
+}
 function setCloseButton(popup) {
     const closeButtons = page.querySelectorAll('.popup__close-button');
     closeButtons.forEach(item => item.addEventListener('click', () => closePopup(popup)));
@@ -76,12 +86,20 @@ function setLikeButton(card) {
     const buttonItem = card.querySelector('.like-button');
     buttonItem.addEventListener('click', () => likeCard(buttonItem));
 }
+function setFullPhoto(card) {
+    const cardImage = card.querySelector('.card__image');
+    cardImage.addEventListener('click', () => showPhoto(cardImage));
+}
 function createCard(placeName, link) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-    cardElement.querySelector('.card__name').textContent = placeName;
-    cardElement.querySelector('.card__image').src = link;
+    const cardName = cardElement.querySelector('.card__name');
+    const cardImage = cardElement.querySelector('.card__image');
+    cardImage.src = link;
+    cardImage.alt = placeName;
+    cardName.textContent = placeName;
     setDeleteButton(cardElement);
     setLikeButton(cardElement);
+    setFullPhoto(cardElement);
     return cardElement;
 }
 function renderCard(cardItem){

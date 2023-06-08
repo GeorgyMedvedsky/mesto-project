@@ -5,3 +5,6 @@
     object-fit: cover;
     object-position: center;
 }
+.card__image:hover{
+    cursor: pointer;
+}
