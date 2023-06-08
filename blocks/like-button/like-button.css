@@ -1,12 +1,12 @@
 .like-button{
+    width: 22px;
+    height: 19px;
     padding: 0;
     border: none;
     background: none;
     cursor: pointer;
     transition: opacity .3s;
-}
-.like-button::after{
-    content: url('../../images/like-button_disabled.svg');
+    background: url('../../images/like-button_disabled.svg') center/contain no-repeat;
 }
 .like-button:hover{
     opacity: .5;
