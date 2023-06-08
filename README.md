@@ -21,3 +21,4 @@
 * Flexbox
 * Grid Layout
 * Adaptive Layout
+* JS
