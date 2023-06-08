@@ -20,10 +20,10 @@ const profileJob = page.querySelector('.profile__job');
 const cardTemplate = document.querySelector('#card').content;
 const cardsContainer = document.querySelector('.cards__list');
 
-for(let j = 0; j < popups.length; j++) {
-    setCloseButton(popups[j]);
-    setSubmitButton(popups[j]);
-}
+popups.forEach(item => {
+    setCloseButton(item);
+    setSubmitButton(item);
+});
 
 function openPopup(popup){
     popup.classList.add('popup_opened');
@@ -31,17 +31,17 @@ function openPopup(popup){
 function closePopup(popup){
     popup.classList.remove('popup_opened');
 }
-function setCloseButton(popupElement) {
-    const closeButtons = page.querySelectorAll('.popup__close-button');
-    for(let i = 0; i < closeButtons.length; i++) {
-        closeButtons[i].addEventListener('click', () => closePopup(popupElement));
-    }
+function deleteCard(deleteButton) {
+    const cardItem = deleteButton.closest('.card');
+    cardItem.remove();
 }
-function setSubmitButton(popupElement) {
+function setCloseButton(popup) {
+    const closeButtons = page.querySelectorAll('.popup__close-button');
+    closeButtons.forEach(item => item.addEventListener('click', () => closePopup(popup)));
+}
+function setSubmitButton(popup) {
     const submitButtons = page.querySelectorAll('.popup__submit');
-    for(let i = 0; i < submitButtons.length; i++) {
-        submitButtons[i].addEventListener('click', () => closePopup(popupElement));
-    }
+    submitButtons.forEach(item => item.addEventListener('click', () => closePopup(popup)));
 }
 function setDeleteButton() {
     const deleteButtons = page.querySelectorAll('.delete-button');
@@ -49,9 +49,14 @@ function setDeleteButton() {
         deleteButtons[i].addEventListener('click', () => deleteCard(deleteButtons[i]));
     }
 }
-function deleteCard(deleteButton) {
-    let cardItem = deleteButton.closest('.card');
-    cardItem.remove();
+function createCard(placeName, link) {
+    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+    cardElement.querySelector('.card__name').textContent = placeName;
+    cardElement.querySelector('.card__image').src = link;
+    return cardElement;
+}
+function renderCard(cardItem){
+    cardsContainer.prepend(cardItem);
 }
 function handleFormSubmitForProfile(evt) {
     evt.preventDefault();
@@ -60,15 +65,9 @@ function handleFormSubmitForProfile(evt) {
 }
 function handleFormSubmitForPlace(evt) {
     evt.preventDefault();
-    getCard(placeNameInput.value, linkInput.value);
+    renderCard(createCard(placeNameInput.value, linkInput.value));
     placeNameInput.value = '';
     linkInput.value = '';
-}
-function getCard(placeName, link) {
-    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-    cardElement.querySelector('.card__name').textContent = placeName;
-    cardElement.querySelector('.card__image').src = link;
-    cardsContainer.prepend(cardElement);
 }
 
 //Handlers
