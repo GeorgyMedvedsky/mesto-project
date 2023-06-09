@@ -93,10 +93,7 @@ function handleFormSubmitForPlace(evt) {
     closePopup(popupForPlace);
 }
 
-initialCards.forEach(card => {
-    const cardObj = card;
-    renderCard(createCard(cardObj));
-});
+initialCards.forEach(card => renderCard(createCard(card)));
 
 popups.forEach(() => setCloseButtons());
 
