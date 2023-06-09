@@ -60,13 +60,13 @@ function setFullPhoto(card) {
     const cardImage = card.querySelector('.card__image');
     cardImage.addEventListener('click', () => showPhoto(cardImage));
 }
-function createCard(placeName, link) {
+function createCard(cardData) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const cardName = cardElement.querySelector('.card__name');
     const cardImage = cardElement.querySelector('.card__image');
-    cardImage.src = link;
-    cardImage.alt = placeName;
-    cardName.textContent = placeName;
+    cardImage.src = cardData.link;
+    cardImage.alt = cardData.name;
+    cardName.textContent = cardData.name;
     setDeleteButton(cardElement);
     setLikeButton(cardElement);
     setFullPhoto(cardElement);
@@ -83,13 +83,20 @@ function handleFormSubmitForProfile(evt) {
 }
 function handleFormSubmitForPlace(evt) {
     evt.preventDefault();
-    renderCard(createCard(placeNameInput.value, linkInput.value));
+    const cardObj = {
+        name: placeNameInput.value,
+        link: linkInput.value,
+    }
+    renderCard(createCard(cardObj));
     placeNameInput.value = '';
     linkInput.value = '';
     closePopup(popupForPlace);
 }
 
-initialCards.forEach(card => renderCard(createCard(card.name, card.link)));
+initialCards.forEach(card => {
+    const cardObj = card;
+    renderCard(createCard(cardObj));
+});
 
 popups.forEach(() => setCloseButtons());
 
@@ -99,8 +106,6 @@ editButton.addEventListener('click', () => {
     openPopup(popupForProfile);
 });
 addButton.addEventListener('click', () => {
-    placeNameInput.value = '';
-    linkInput.value = '';
     openPopup(popupForPlace);
 });
 formElementForProfile.addEventListener('submit', handleFormSubmitForProfile);
