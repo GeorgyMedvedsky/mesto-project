@@ -42,13 +42,17 @@ function showPhoto(cardImage) {
     popupDescription.textContent = cardImage.alt;
     openPopup(popupForPhoto);
 }
-function setCloseButton(popup) {
-    const closeButtons = page.querySelectorAll('.popup__close-button');
-    closeButtons.forEach(item => item.addEventListener('click', () => closePopup(popup)));
+function setCloseButtons() {
+    page.querySelectorAll('.popup__close-button').forEach(button => {
+        const buttonsPopup = button.closest('.popup');
+        button.addEventListener('click', () => closePopup(buttonsPopup));
+    }); 
 }
-function setSubmitButton(popup) {
-    const submitButtons = page.querySelectorAll('.popup__submit');
-    submitButtons.forEach(item => item.addEventListener('click', () => closePopup(popup)));
+function setSubmitButtons() {
+    page.querySelectorAll('.popup__submit').forEach(button => {
+        const buttonsPopup = button.closest('.popup');
+        button.addEventListener('click', () => closePopup(buttonsPopup));
+    });
 }
 function setDeleteButton(card) {
     const buttonItem = card.querySelector('.delete-button');
@@ -90,9 +94,10 @@ function handleFormSubmitForPlace(evt) {
 }
 
 initialCards.forEach(card => renderCard(createCard(card.name, card.link)));
-popups.forEach(item => {
-    setCloseButton(item);
-    setSubmitButton(item);
+
+popups.forEach(() => {
+    setCloseButtons();
+    setSubmitButtons();
 });
 editButton.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
