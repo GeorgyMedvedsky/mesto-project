@@ -107,3 +107,7 @@ addButton.addEventListener('click', () => {
 });
 formElementForProfile.addEventListener('submit', handleFormSubmitForProfile);
 formElementForPlace.addEventListener('submit', handleFormSubmitForPlace);
+
+document.addEventListener('click', evt => {
+    if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
+});

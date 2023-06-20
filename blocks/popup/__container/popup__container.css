@@ -9,6 +9,9 @@
     position: relative;
     box-sizing: border-box;
 }
+.popup__container:hover{
+    cursor: default;
+}
 
 @media screen and (min-width: 1024px) {
     .popup__container{
