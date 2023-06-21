@@ -24,11 +24,18 @@ const profileJob = page.querySelector('.profile__job');
 const cardTemplate = document.querySelector('#card').content;
 const cardsContainer = page.querySelector('.cards__list');
 
+
 function openPopup(popup){
     popup.classList.add('popup_opened');
+    document.addEventListener('click', evt => {
+        if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
+    });
 }
 function closePopup(popup){
     popup.classList.remove('popup_opened');
+    document.removeEventListener('click', evt => {
+        if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
+    });
 }
 function deleteCard(button) {
     button.closest('.card').remove();
@@ -107,7 +114,3 @@ addButton.addEventListener('click', () => {
 });
 formElementForProfile.addEventListener('submit', handleFormSubmitForProfile);
 formElementForPlace.addEventListener('submit', handleFormSubmitForPlace);
-
-document.addEventListener('click', evt => {
-    if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
-});
