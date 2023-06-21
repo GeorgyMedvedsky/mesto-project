@@ -24,18 +24,21 @@ const profileJob = page.querySelector('.profile__job');
 const cardTemplate = document.querySelector('#card').content;
 const cardsContainer = page.querySelector('.cards__list');
 
-
+function overlayClickHandler(evt){
+    if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
+}
+function popupCloseHandlerOnEsc(evt, popup) {
+    if(evt.key === 'Escape' && popup.classList.contains('popup_opened')) closePopup(popup);
+}
 function openPopup(popup){
     popup.classList.add('popup_opened');
-    document.addEventListener('click', evt => {
-        if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
-    });
+    document.addEventListener('click', evt => overlayClickHandler(evt));
+    document.addEventListener('keydown', evt => popupCloseHandlerOnEsc(evt, popup));
 }
 function closePopup(popup){
     popup.classList.remove('popup_opened');
-    document.removeEventListener('click', evt => {
-        if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
-    });
+    document.removeEventListener('click', evt => overlayClickHandler(evt));
+    document.removeEventListener('keydown', evt => popupCloseHandlerOnEsc(evt, popup));
 }
 function deleteCard(button) {
     button.closest('.card').remove();
