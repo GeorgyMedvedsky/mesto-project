@@ -2,14 +2,14 @@ const page = document.querySelector('.page');
 const popups = page.querySelectorAll('.popup');
 //Popup for profile
 const popupForProfile = page.querySelector('.popup-profile');
-const formElementForProfile = popupForProfile.querySelector('.popup__form');
-const nameInput = formElementForProfile.querySelector('.popup__input_type_name');
-const jobInput = formElementForProfile.querySelector('.popup__input_type_job');
+const profileForm = document.forms.profile;
+const nameInput = profileForm.elements.name;
+const jobInput = profileForm.elements.job;
 //Popup for new place
 const popupForPlace = page.querySelector('.popup-new-place');
-const formElementForPlace = popupForPlace.querySelector('.popup__form');
-const placeNameInput = formElementForPlace.querySelector('.popup__input_type_place');
-const linkInput = formElementForPlace.querySelector('.popup__input_type_link');
+const newPlaceForm = document.forms.newPlace;
+const placeNameInput = newPlaceForm.elements.placeName;
+const linkInput = newPlaceForm.elements.link;
 //Popup for photo
 const popupForPhoto = page.querySelector('.popup-photo');
 const popupImg = popupForPhoto.querySelector('.popup__img');
@@ -85,21 +85,20 @@ function createCard(cardData) {
 function renderCard(cardItem){
     cardsContainer.prepend(cardItem);
 }
-function handleFormSubmitForProfile(evt) {
+function setProfileFormSumbit(evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     closePopup(popupForProfile);
 }
-function handleFormSubmitForPlace(evt) {
+function setNewPlaceFormSubmit(evt) {
     evt.preventDefault();
     const cardObj = {
         name: placeNameInput.value,
         link: linkInput.value,
     }
     renderCard(createCard(cardObj));
-    placeNameInput.value = '';
-    linkInput.value = '';
+    newPlaceForm.reset();
     closePopup(popupForPlace);
 }
 
@@ -115,5 +114,5 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => {
     openPopup(popupForPlace);
 });
-formElementForProfile.addEventListener('submit', handleFormSubmitForProfile);
-formElementForPlace.addEventListener('submit', handleFormSubmitForPlace);
+profileForm.addEventListener('submit', setProfileFormSumbit);
+newPlaceForm.addEventListener('submit', setNewPlaceFormSubmit);
