@@ -39,9 +39,11 @@
         <div class="popup popup_type_form popup-profile">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <form name="profile" class="popup__form">
-                    <input class="popup__input popup__input_type_name" type="text" id="name" name="name">
-                    <input class="popup__input popup__input_type_job" type="text" id="job" name="job">
+                <form name="profile" class="popup__form form" novalidate>
+                    <input class="popup__input popup__input_type_name" type="text" id="name-input" name="name" minlength="2" maxlength="20" required pattern="[a-zA-ZА-Яа-я ]+$" data-error-message="Разрешены только латинские и кириллические буквы, дефисы, пробелы">
+                    <span class="name-input-error form_input-error"></span>
+                    <input class="popup__input popup__input_type_job" type="text" id="job-input" name="job" minlength="2" maxlength="200" required pattern="[a-zA-ZА-Яа-я ]+$">
+                    <span class="job-input-error form_input-error"></span>
                     <input class="popup__submit" type="submit" id="profile-submit" name="profile-submit" value="Сохранить">
                 </form>
                 <button type="button" class="popup__close-button"></button>
@@ -50,9 +52,11 @@
         <div class="popup popup_type_form popup-new-place">
             <div class="popup__container">
                 <h2 class="popup__title">Новое место</h2>
-                <form name="newPlace" class="popup__form">
-                    <input class="popup__input popup__input_type_place" type="text" id="place-name" name="placeName" placeholder="Название">
-                    <input class="popup__input popup__input_type_link" type="text" id="place-link" name="link" placeholder="Ссылка на картинку">
+                <form name="newPlace" class="popup__form form" novalidate>
+                    <input class="popup__input popup__input_type_place" type="text" id="place-name-input" name="placeName" placeholder="Название" minlength="2" maxlength="30" required pattern="[a-zA-ZА-Яа-я ]+$">
+                    <span class="place-name-input-error form_input-error"></span>
+                    <input class="popup__input popup__input_type_link" type="url" id="place-link-input" name="link" placeholder="Ссылка на картинку" required>
+                    <span class="place-link-input-error form_input-error"></span>
                     <input class="popup__submit" type="submit" id="place-submit" name="place-submit" value="Создать">
                 </form>
                 <button type="button" class="popup__close-button"></button>
