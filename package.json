@@ -4,7 +4,7 @@
   "description": "mesto-project",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack --mode production",
+    "build": "webpack --mode production",
     "dev": "webpack serve"
   },
   "repository": {
@@ -22,7 +22,9 @@
     "@babel/preset-env": "^7.22.5",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
