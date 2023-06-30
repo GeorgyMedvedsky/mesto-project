@@ -3,7 +3,6 @@ import {
     popupImg,
     popupDescription,
     openPopup,
-    closePopup,
 } from './modal.js';
 
 const cardTemplate = document.querySelector('#card').content;
@@ -20,12 +19,6 @@ function showPhoto(cardImage) {
     popupImg.alt = cardImage.alt;
     popupDescription.textContent = cardImage.alt;
     openPopup(popupForPhoto);
-}
-function setCloseButtons() {
-    document.querySelectorAll('.popup__close-button').forEach(button => {
-        const buttonsPopup = button.closest('.popup');
-        button.addEventListener('click', () => closePopup(buttonsPopup));
-    }); 
 }
 function setDeleteButton(card) {
     const buttonItem = card.querySelector('.delete-button');
@@ -61,7 +54,6 @@ export {
     deleteCard,
     likeCard,
     showPhoto,
-    setCloseButtons,
     setDeleteButton,
     setLikeButton,
     setFullPhoto,

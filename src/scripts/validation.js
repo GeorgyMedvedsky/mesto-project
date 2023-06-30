@@ -8,32 +8,39 @@ function hideInputError(formElement, inputElement, {inputErrorClass}) {
     inputElement.classList.remove(inputErrorClass);
     errorElement.textContent = '';
 }
-function isValid(formElement, inputElement, {...rest}) {
+function isValid(formElement, inputElement, {inputErrorClass}) {
     if (inputElement.validity.patternMismatch) inputElement.setCustomValidity(inputElement.dataset.errorMessage);
     else inputElement.setCustomValidity("");
 
-    if(!inputElement.validity.valid) showInputError(formElement, inputElement, inputElement.validationMessage, {...rest})
-    else hideInputError(formElement, inputElement, {...rest});
+    if(!inputElement.validity.valid) showInputError(formElement, inputElement, inputElement.validationMessage, {inputErrorClass})
+    else hideInputError(formElement, inputElement, {inputErrorClass});
 }
 function hasInvalidInput(inputList) {
     return inputList.some(inputElement => !inputElement.validity.valid);
 }
-function toggleButtonState(inputList, buttonElement, {inactiveButtonClass}) {
-    if(hasInvalidInput(inputList)) {
-        buttonElement.disabled = true;
+function toggleButtonState(inputList, buttonElement, {inactiveButtonClass}) { 
+    if(hasInvalidInput(inputList)) { 
+        disableButtonSumbit(buttonElement, true);
         buttonElement.classList.add(inactiveButtonClass);
-    } else {
-        buttonElement.disabled = false;
-        buttonElement.classList.remove(inactiveButtonClass);
-    }
+    } else { 
+        disableButtonSumbit(buttonElement, false);
+        buttonElement.classList.remove(inactiveButtonClass); 
+    } 
+} 
+function disableButtonSumbit(buttonElement, settings) {
+    buttonElement.disabled = settings;
 }
-function setEventListeners(formElement, {inputSelector, submitButtonSelector, ...rest}) {
+function setEventListeners(formElement, {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass}) {
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
-    toggleButtonState(inputList, buttonElement, {...rest});
+    toggleButtonState(inputList, buttonElement, {inactiveButtonClass});
+    formElement.addEventListener('reset', () => {
+        disableButtonSumbit(buttonElement, true);
+        buttonElement.classList.add(inactiveButtonClass);
+    });
     inputList.forEach(inputElement => inputElement.addEventListener('input', () => {
-        isValid(formElement, inputElement, {...rest});
-        toggleButtonState(inputList, buttonElement, {...rest});
+        isValid(formElement, inputElement, {inputErrorClass});
+        toggleButtonState(inputList, buttonElement, {inactiveButtonClass});
     }));
 }
 function enableValidation({formSelector, ...rest}) {
@@ -48,5 +55,6 @@ export {
     setEventListeners,
     hasInvalidInput,
     toggleButtonState,
-    enableValidation
+    enableValidation,
+    disableButtonSumbit
 };

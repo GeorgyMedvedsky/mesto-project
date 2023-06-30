@@ -2,6 +2,7 @@ import {
     createCard,
     renderCard
 } from './card.js';
+import {disableButtonSumbit} from './validation.js';
 
 //Popup for profile
 const popupForProfile = document.querySelector('.popup-profile');
@@ -23,27 +24,28 @@ const profileJob = document.querySelector('.profile__job');
 
 function openPopup(popup){
     popup.classList.add('popup_opened');
-    document.addEventListener('click', evt => overlayClickHandler(evt));
-    document.addEventListener('keydown', evt => popupCloseHandlerOnEsc(evt, popup));
+    document.addEventListener('keydown', closeByEsc);
 }
 function closePopup(popup){
     popup.classList.remove('popup_opened');
-    document.removeEventListener('click', evt => overlayClickHandler(evt));
-    document.removeEventListener('keydown', evt => popupCloseHandlerOnEsc(evt, popup));
+    document.removeEventListener('keydown', closeByEsc);
 }
-function overlayClickHandler(evt){
-    if(!evt.target.classList.contains('popup__container')) closePopup(evt.target);
+function closeByEsc(evt) {
+    if(evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_opened');
+        closePopup(openedPopup);
+    }
 }
-function popupCloseHandlerOnEsc(evt, popup) {
-    if(evt.key === 'Escape' && popup.classList.contains('popup_opened')) closePopup(popup);
-}
-function setProfileFormSumbit(evt) {
+function handleProfileFormSumbit(evt) {
     evt.preventDefault();
+    const buttonElement = profileForm.querySelector('.popup__submit');
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
+    disableButtonSumbit(buttonElement, true);
+    buttonElement.classList.add('popup__submit_inactive');
     closePopup(popupForProfile);
 }
-function setNewPlaceFormSubmit(evt) {
+function handleNewPlaceFormSubmit(evt) {
     evt.preventDefault();
     const cardObj = {
         name: placeNameInput.value,
@@ -70,8 +72,7 @@ export {
     profileJob,
     openPopup,
     closePopup,
-    overlayClickHandler,
-    popupCloseHandlerOnEsc,
-    setProfileFormSumbit,
-    setNewPlaceFormSubmit
+    closeByEsc,
+    handleProfileFormSumbit,
+    handleNewPlaceFormSubmit
 };

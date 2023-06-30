@@ -9,11 +9,11 @@ import {
     popupForPlace,
     newPlaceForm,
     openPopup,
-    setProfileFormSumbit,
-    setNewPlaceFormSubmit
+    handleProfileFormSumbit,
+    handleNewPlaceFormSubmit,
+    closePopup
 } from './scripts/modal.js';
 import {
-    setCloseButtons,
     createCard,
     renderCard
 } from './scripts/card.js';
@@ -24,22 +24,21 @@ const popups = document.querySelectorAll('.popup');
 const editButton = document.querySelector('.edit-button');
 const addButton = document.querySelector('.add-button');
 
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) closePopup(popup);
+        if (evt.target.classList.contains('popup__close-button')) closePopup(popup);
+    });
+})
 initialCards.forEach(card => renderCard(createCard(card)));
-
-popups.forEach(() => setCloseButtons());
-
 editButton.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     openPopup(popupForProfile);
 });
-
-addButton.addEventListener('click', () => {
-    openPopup(popupForPlace);
-});
-
-profileForm.addEventListener('submit', setProfileFormSumbit);
-newPlaceForm.addEventListener('submit', setNewPlaceFormSubmit);
+addButton.addEventListener('click', () => openPopup(popupForPlace));
+profileForm.addEventListener('submit', handleProfileFormSumbit);
+newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
 
 enableValidation({
     formSelector: '.popup__form',
@@ -47,4 +46,4 @@ enableValidation({
     submitButtonSelector: '.popup__submit',
     inactiveButtonClass: 'popup__submit_inactive',
     inputErrorClass: 'popup__input_type_error',
-  }); 
+}); 
