@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/GeorgyMedvedsky/mesto-project/issues"
   },
-  "homepage": "https://github.com/GeorgyMedvedsky/mesto-project#readme",
+  "homepage": "https://github.com/GeorgyMedvedsky/mesto-project",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
@@ -33,6 +33,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "core-js": "^3.31.0"
+    "core-js": "^3.31.0",
+    "gh-pages": "^5.0.0"
   }
 }
