@@ -1,23 +1,8 @@
 import { initialCards } from './scripts/cards.js';
-import {
-    popupForProfile,
-    profileForm,
-    nameInput,
-    jobInput,
-    profileName,
-    profileJob,
-    popupForPlace,
-    newPlaceForm,
-    openPopup,
-    handleProfileFormSumbit,
-    handleNewPlaceFormSubmit,
-    closePopup
-} from './scripts/modal.js';
-import {
-    createCard,
-    renderCard
-} from './scripts/card.js';
-import { enableValidation } from './scripts/validation.js';
+import * as modal from './scripts/modal.js';
+import * as card from './scripts/card.js';
+import * as validation from './scripts/validation.js';
+
 import './pages/index.css';
 
 const popups = document.querySelectorAll('.popup');
@@ -26,21 +11,21 @@ const addButton = document.querySelector('.add-button');
 
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) closePopup(popup);
-        if (evt.target.classList.contains('popup__close-button')) closePopup(popup);
+        if (evt.target.classList.contains('popup_opened')) modal.closePopup(popup);
+        if (evt.target.classList.contains('popup__close-button')) modal.closePopup(popup);
     });
 })
-initialCards.forEach(card => renderCard(createCard(card)));
+initialCards.forEach(cardItem => card.renderCard(card.createCard(cardItem)));
 editButton.addEventListener('click', () => {
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-    openPopup(popupForProfile);
+    modal.nameInput.value = modal.profileName.textContent;
+    modal.jobInput.value = modal.profileJob.textContent;
+    modal.openPopup(modal.popupForProfile);
 });
-addButton.addEventListener('click', () => openPopup(popupForPlace));
-profileForm.addEventListener('submit', handleProfileFormSumbit);
-newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
+addButton.addEventListener('click', () => modal.openPopup(modal.popupForPlace));
+modal.profileForm.addEventListener('submit', modal.handleProfileFormSumbit);
+modal.newPlaceForm.addEventListener('submit', modal.handleNewPlaceFormSubmit);
 
-enableValidation({
+validation.enableValidation({
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__submit',

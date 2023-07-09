@@ -27,7 +27,7 @@ function toggleButtonState(inputList, buttonElement, {inactiveButtonClass}) {
         buttonElement.classList.remove(inactiveButtonClass); 
     } 
 } 
-function disableButtonSumbit(buttonElement, settings) {
+export function disableButtonSumbit(buttonElement, settings) {
     buttonElement.disabled = settings;
 }
 function setEventListeners(formElement, {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass}) {
@@ -43,18 +43,7 @@ function setEventListeners(formElement, {inputSelector, submitButtonSelector, in
         toggleButtonState(inputList, buttonElement, {inactiveButtonClass});
     }));
 }
-function enableValidation({formSelector, ...rest}) {
+export function enableValidation({formSelector, ...rest}) {
     const formList = Array.from(document.querySelectorAll(formSelector));
     formList.forEach(formElement => setEventListeners(formElement, {...rest}));
 }
-
-export {
-    showInputError,
-    hideInputError,
-    isValid,
-    setEventListeners,
-    hasInvalidInput,
-    toggleButtonState,
-    enableValidation,
-    disableButtonSumbit
-};
