@@ -1,8 +1,6 @@
-import { initialCards } from './scripts/cards.js';
 import * as modal from './scripts/modal.js';
-import * as card from './scripts/card.js';
 import * as validation from './scripts/validation.js';
-
+import * as utils from './scripts/utils.js';
 import './pages/index.css';
 
 const popups = document.querySelectorAll('.popup');
@@ -15,7 +13,6 @@ popups.forEach((popup) => {
         if (evt.target.classList.contains('popup__close-button')) modal.closePopup(popup);
     });
 })
-initialCards.forEach(cardItem => card.renderCard(card.createCard(cardItem)));
 editButton.addEventListener('click', () => {
     modal.nameInput.value = modal.profileName.textContent;
     modal.jobInput.value = modal.profileJob.textContent;
@@ -31,4 +28,6 @@ validation.enableValidation({
     submitButtonSelector: '.popup__submit',
     inactiveButtonClass: 'popup__submit_inactive',
     inputErrorClass: 'popup__input_type_error',
-}); 
+});
+utils.getProfileData();
+utils.getInitialCards();

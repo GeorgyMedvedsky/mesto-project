@@ -1,3 +1,4 @@
+import * as api from './api.js';
 import * as modal from './modal.js';
 
 export const cardTemplate = document.querySelector('#card').content;
@@ -15,28 +16,44 @@ export function showPhoto(cardImage) {
     modal.popupDescription.textContent = cardImage.alt;
     modal.openPopup(modal.popupForPhoto);
 }
-export function setDeleteButton(card) {
-    const buttonItem = card.querySelector('.delete-button');
-    buttonItem.addEventListener('click', () => deleteCard(buttonItem));
+export function setDeleteButton(cardElement, cardData) {
+    const buttonItem = cardElement.querySelector('.delete-button');
+
+    buttonItem.addEventListener('click', () => {
+        deleteCard(buttonItem);
+    });
+    // if(cardData.owner.name === modal.profileName.textContent) {
+    //     buttonItem.classList.remove('delete-button_hidden');
+        
+    // } else {
+    //     buttonItem.classList.add('delete-button_hidden');
+    // }
 }
 export function setLikeButton(card) {
     const buttonItem = card.querySelector('.like-button');
-    buttonItem.addEventListener('click', () => likeCard(buttonItem));
+
+    buttonItem.addEventListener('click', () => {
+        likeCard(buttonItem);
+    });
 }
 export function setFullPhoto(card) {
     const cardImage = card.querySelector('.card__image');
+
     cardImage.addEventListener('click', () => showPhoto(cardImage));
 }
 export function createCard(cardData) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const cardName = cardElement.querySelector('.card__name');
     const cardImage = cardElement.querySelector('.card__image');
+
     cardImage.src = cardData.link;
     cardImage.alt = cardData.name;
     cardName.textContent = cardData.name;
-    setDeleteButton(cardElement);
+
+    setDeleteButton(cardElement, cardData);
     setLikeButton(cardElement);
     setFullPhoto(cardElement);
+
     return cardElement;
 }
 export function renderCard(cardItem){

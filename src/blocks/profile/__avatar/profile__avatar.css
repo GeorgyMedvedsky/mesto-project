@@ -4,7 +4,6 @@
     height: 120px;
     margin-bottom: 26px;
     object-fit: cover;
-    background: url(../../../images/avatar.jpg) center/contain;
 }
 
 @media screen and (min-width: 1024px) {
