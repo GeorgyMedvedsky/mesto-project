@@ -1,5 +1,6 @@
 import * as api from './api.js';
 import * as modal from './modal.js';
+import * as utils from './utils.js';
 
 export const cardTemplate = document.querySelector('#card').content;
 export const cardsContainer = document.querySelector('.cards__list');
@@ -16,24 +17,33 @@ export function showPhoto(cardImage) {
     modal.popupDescription.textContent = cardImage.alt;
     modal.openPopup(modal.popupForPhoto);
 }
-export function setDeleteButton(cardElement, cardData) {
+export function setDeleteButton(cardElement, cardData, profileId) {
     const buttonItem = cardElement.querySelector('.delete-button');
 
-    buttonItem.addEventListener('click', () => {
-        deleteCard(buttonItem);
-    });
-    // if(cardData.owner.name === modal.profileName.textContent) {
-    //     buttonItem.classList.remove('delete-button_hidden');
+    if(cardData.owner._id === profileId) {
+        buttonItem.classList.remove('delete-button_hidden');
+        buttonItem.addEventListener('click', () => {
+            utils.deleteCard(cardData._id, buttonItem);
+        });
         
-    // } else {
-    //     buttonItem.classList.add('delete-button_hidden');
-    // }
+    } else {
+        buttonItem.classList.add('delete-button_hidden');
+    }
 }
-export function setLikeButton(card) {
+export function setLikeButton(card, cardData, profileId) {
     const buttonItem = card.querySelector('.like-button');
+    const likes = cardData.likes;
 
     buttonItem.addEventListener('click', () => {
-        likeCard(buttonItem);
+        likes.forEach(userLike => {
+            if(userLike._id === profileId) {
+                api.deleteLike(cardData._id);
+            } else {
+                api.setLike(cardData._id, cardData.likes)
+            }
+        })
+
+        likeCard(buttonItem)
     });
 }
 export function setFullPhoto(card) {
@@ -41,17 +51,19 @@ export function setFullPhoto(card) {
 
     cardImage.addEventListener('click', () => showPhoto(cardImage));
 }
-export function createCard(cardData) {
+export function createCard(cardData, profileId) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const cardName = cardElement.querySelector('.card__name');
     const cardImage = cardElement.querySelector('.card__image');
+    const likes = cardElement.querySelector('.like-button__likes');
 
     cardImage.src = cardData.link;
     cardImage.alt = cardData.name;
     cardName.textContent = cardData.name;
+    likes.textContent = cardData.likes.length;
 
-    setDeleteButton(cardElement, cardData);
-    setLikeButton(cardElement);
+    setDeleteButton(cardElement, cardData, profileId);
+    setLikeButton(cardElement, cardData, profileId);
     setFullPhoto(cardElement);
 
     return cardElement;

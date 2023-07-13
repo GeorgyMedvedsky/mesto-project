@@ -1,11 +1,13 @@
 import * as modal from './scripts/modal.js';
 import * as validation from './scripts/validation.js';
-import * as utils from './scripts/utils.js';
+import * as api from './scripts/api.js';
+import * as card from './scripts/card.js';
 import './pages/index.css';
 
 const popups = document.querySelectorAll('.popup');
 const editButton = document.querySelector('.edit-button');
 const addButton = document.querySelector('.add-button');
+let profileId = undefined;
 
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
@@ -29,5 +31,21 @@ validation.enableValidation({
     inactiveButtonClass: 'popup__submit_inactive',
     inputErrorClass: 'popup__input_type_error',
 });
-utils.getProfileData();
-utils.getInitialCards();
+api.getProfileData()
+    .then(profileData => {
+        modal.profileName.textContent = profileData.name;
+        modal.profileJob.textContent = profileData.about;
+        modal.avatar.src = profileData.avatar;
+        profileId = profileData._id;
+    })
+    .catch(err => console.error(err));
+
+api.getInitialCards()
+    .then(data => {
+        data.forEach(cardItem => {
+            const newCard = card.createCard(cardItem, profileId)
+
+            card.renderCard(newCard);
+        });
+    })
+    .catch(err => console.error(err));

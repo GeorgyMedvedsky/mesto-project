@@ -80,6 +80,20 @@
                 <button type="button" class="popup__close-button"></button>
             </div>
         </div>
+        <div class="popup popup_type_avatar popup-avatar">
+            <div class="popup__container">
+                <h2 class="popup__title">Обновить аватар</h2>
+                <form name="avatar" class="popup__form form" novalidate>
+                    <input class="popup__input popup__input_type_link" type="url" id="avatar-input" name="avatar" required>
+                    <span class="avatar-input-error form_input-error"></span>
+                    
+                    <input class="popup__submit" type="submit" id="avatar-submit" name="avatar-submit"
+                        value="Сохранить">
+                </form>
+                <button type="button" class="popup__close-button"></button>
+            </div>
+        </div>
+        
     </div>
     <template id="card">
         <li class="card">

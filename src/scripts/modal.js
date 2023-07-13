@@ -1,6 +1,5 @@
 import * as api from './api.js';
 import * as card from './card.js';
-import * as utils from './utils.js';
 import * as validation from './validation.js';
 
 //Popup for profile
@@ -44,7 +43,7 @@ export function handleProfileFormSumbit(evt) {
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     
-    utils.setProfileData(profileName.textContent, profileJob.textContent);
+    api.setProfileData(profileName.textContent, profileJob.textContent);
     validation.disableButtonSumbit(buttonElement, true);
     buttonElement.classList.add('popup__submit_inactive');
     closePopup(popupForProfile);
@@ -55,8 +54,13 @@ export function handleNewPlaceFormSubmit(evt) {
         name: placeNameInput.value,
         link: linkInput.value
     }
-    utils.addNewCardToServer(cardObj)
-    card.renderCard(card.createCard(cardObj));
+    api.addNewCard(cardObj)
+        .then(cardData => {
+            const newCard = card.createCard(cardData);
+            card.renderCard(newCard);
+        })
+        .catch(err => console.error(err));
+    
     newPlaceForm.reset();
     closePopup(popupForPlace);
 }
