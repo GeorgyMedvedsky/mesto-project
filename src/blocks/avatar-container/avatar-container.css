@@ -1,0 +1,9 @@
+.avatar-container{
+    margin: 0;
+}
+.avatar-container:hover{
+    background-image: url('../../images/edit-button.svg');
+    background-size: 26px 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}

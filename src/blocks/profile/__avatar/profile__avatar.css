@@ -2,18 +2,10 @@
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    margin-bottom: 26px;
     object-fit: cover;
     transition: opacity .3s;
 }
 .profile__avatar:hover{
     cursor: pointer;
     opacity: .3;
-    background: url('../../../images/edit-button.svg') center no-repeat;
-}
-
-@media screen and (min-width: 1024px) {
-    .profile__avatar{
-        margin: 0 30px 0 0;
-    }
 }
