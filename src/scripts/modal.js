@@ -1,26 +1,3 @@
-import * as api from './api.js';
-import * as card from './card.js';
-import * as validation from './validation.js';
-
-//Popup for profile
-export const popupForProfile = document.querySelector('.popup-profile');
-export const profileForm = document.forms.profile;
-export const nameInput = profileForm.elements.name;
-export const jobInput = profileForm.elements.job;
-//Popup for new place
-export const popupForPlace = document.querySelector('.popup-new-place');
-export const newPlaceForm = document.forms.newPlace;
-export const placeNameInput = newPlaceForm.elements.placeName;
-export const linkInput = newPlaceForm.elements.link;
-//Popup for photo
-export const popupForPhoto = document.querySelector('.popup-photo');
-export const popupImg = popupForPhoto.querySelector('.popup__img');
-export const popupDescription = popupForPhoto.querySelector('.popup__description');
-//Profile
-export const profileName = document.querySelector('.profile__name');
-export const profileJob = document.querySelector('.profile__job');
-export const avatar = document.querySelector('.profile__avatar');
-
 export function openPopup(popup){
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closeByEsc);
@@ -34,33 +11,4 @@ export function closeByEsc(evt) {
         const openedPopup = document.querySelector('.popup_opened');
         closePopup(openedPopup);
     }
-}
-export function handleProfileFormSumbit(evt) {
-    evt.preventDefault();
-
-    const buttonElement = profileForm.querySelector('.popup__submit');
-
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-    
-    api.setProfileData(profileName.textContent, profileJob.textContent);
-    validation.disableButtonSumbit(buttonElement, true);
-    buttonElement.classList.add('popup__submit_inactive');
-    closePopup(popupForProfile);
-}
-export function handleNewPlaceFormSubmit(evt) {
-    evt.preventDefault();
-    const cardObj = {
-        name: placeNameInput.value,
-        link: linkInput.value
-    }
-    api.addNewCard(cardObj)
-        .then(cardData => {
-            const newCard = card.createCard(cardData);
-            card.renderCard(newCard);
-        })
-        .catch(err => console.error(err));
-    
-    newPlaceForm.reset();
-    closePopup(popupForPlace);
 }

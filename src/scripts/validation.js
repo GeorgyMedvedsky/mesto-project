@@ -29,6 +29,7 @@ function toggleButtonState(inputList, buttonElement, {inactiveButtonClass}) {
 } 
 export function disableButtonSumbit(buttonElement, settings) {
     buttonElement.disabled = settings;
+    buttonElement.classList.add('popup__submit_inactive');
 }
 function setEventListeners(formElement, {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass}) {
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));

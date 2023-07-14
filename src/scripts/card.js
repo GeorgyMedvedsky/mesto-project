@@ -2,59 +2,57 @@ import * as api from './api.js';
 import * as modal from './modal.js';
 import * as utils from './utils.js';
 
-export const cardTemplate = document.querySelector('#card').content;
-export const cardsContainer = document.querySelector('.cards__list');
-
-export function deleteCard(button) {
+export function deleteCardFromUser(button) {
     button.closest('.card').remove();
 }
-export function likeCard(button) {
-    button.classList.toggle('like-button_active');
+export function deleteCard(cardId, button) {
+    api.deleteCardFromServer(cardId);
+    deleteCardFromUser(button);
 }
+// export function likeCard(button) {
+//     button.classList.toggle('like-button_active');
+// }
 export function showPhoto(cardImage) {
-    modal.popupImg.src = cardImage.src;
-    modal.popupImg.alt = cardImage.alt;
-    modal.popupDescription.textContent = cardImage.alt;
-    modal.openPopup(modal.popupForPhoto);
+    utils.popupImg.src = cardImage.src;
+    utils.popupImg.alt = cardImage.alt;
+    utils.popupDescription.textContent = cardImage.alt;
+    modal.openPopup(utils.popupForPhoto);
 }
-export function setDeleteButton(cardElement, cardData, profileId) {
-    const buttonItem = cardElement.querySelector('.delete-button');
-
+export function setDeleteButton(button, cardData, profileId) {
     if(cardData.owner._id === profileId) {
-        buttonItem.classList.remove('delete-button_hidden');
-        buttonItem.addEventListener('click', () => {
-            utils.deleteCard(cardData._id, buttonItem);
+        button.classList.remove('delete-button_hidden');
+        button.addEventListener('click', () => {
+            deleteCard(cardData._id, button);
         });
         
     } else {
-        buttonItem.classList.add('delete-button_hidden');
+        button.classList.add('delete-button_hidden');
     }
 }
-export function setLikeButton(card, cardData, profileId) {
-    const buttonItem = card.querySelector('.like-button');
-    const likes = cardData.likes;
-
-    buttonItem.addEventListener('click', () => {
-        likes.forEach(userLike => {
-            if(userLike._id === profileId) {
-                api.deleteLike(cardData._id);
-            } else {
-                api.setLike(cardData._id, cardData.likes)
-            }
-        })
-
-        likeCard(buttonItem)
+export function setLikeButton(button, cardData, profileId) {
+        button.addEventListener('click', () => {
+            cardData.likes.forEach(userLike => {
+                if(userLike._id === profileId) {
+                    button.classList.add('like-button_active');
+                    api.setLike(cardData._id, cardData.likes);
+                } else {
+                    button.classList.remove('like-button_active');
+                    api.deleteLike(cardData._id);
+                }
+            })
     });
 }
-export function setFullPhoto(card) {
-    const cardImage = card.querySelector('.card__image');
 
+export function setFullPhoto(cardImage) {
     cardImage.addEventListener('click', () => showPhoto(cardImage));
 }
+
 export function createCard(cardData, profileId) {
-    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+    const cardElement = utils.cardTemplate.querySelector('.card').cloneNode(true);
     const cardName = cardElement.querySelector('.card__name');
     const cardImage = cardElement.querySelector('.card__image');
+    const deleteBtn = cardElement.querySelector('.delete-button');
+    const likeBtn = cardElement.querySelector('.like-button');
     const likes = cardElement.querySelector('.like-button__likes');
 
     cardImage.src = cardData.link;
@@ -62,12 +60,9 @@ export function createCard(cardData, profileId) {
     cardName.textContent = cardData.name;
     likes.textContent = cardData.likes.length;
 
-    setDeleteButton(cardElement, cardData, profileId);
-    setLikeButton(cardElement, cardData, profileId);
-    setFullPhoto(cardElement);
+    setDeleteButton(deleteBtn, cardData, profileId);
+    setLikeButton(likeBtn, cardData, profileId);
+    setFullPhoto(cardImage);
 
     return cardElement;
-}
-export function renderCard(cardItem){
-    cardsContainer.prepend(cardItem);
 }

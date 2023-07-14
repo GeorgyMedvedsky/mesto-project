@@ -9,6 +9,7 @@
 .profile__avatar:hover{
     cursor: pointer;
     opacity: .3;
+    background: url('../../../images/edit-button.svg') center no-repeat;
 }
 
 @media screen and (min-width: 1024px) {
