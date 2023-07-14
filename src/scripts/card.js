@@ -5,10 +5,6 @@ import * as utils from './utils.js';
 export function deleteCardFromUser(button) {
     button.closest('.card').remove();
 }
-export function deleteCard(cardId, button) {
-    api.deleteCardFromServer(cardId);
-    deleteCardFromUser(button);
-}
 // export function likeCard(button) {
 //     button.classList.toggle('like-button_active');
 // }
@@ -22,7 +18,8 @@ export function setDeleteButton(button, cardData, profileId) {
     if(cardData.owner._id === profileId) {
         button.classList.remove('delete-button_hidden');
         button.addEventListener('click', () => {
-            deleteCard(cardData._id, button);
+            api.deleteCardFromServer(cardData._id)
+            deleteCardFromUser(button);
         });
         
     } else {
