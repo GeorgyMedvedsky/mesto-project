@@ -30,7 +30,7 @@ export function setProfileData(name, about) {
     .then(res => checkResponse(res))
 }
 
-export function addNewCard({name, link}) {
+export function addNewCard(name, link) {
     return fetch(`${config.baseUrl}/cards`, {
         method: 'POST',
         headers: config.headers,
@@ -39,7 +39,7 @@ export function addNewCard({name, link}) {
     .then(res => checkResponse(res))
 }
 
-export function deleteCardFromServer(cardId) {
+export function deleteCard(cardId) {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
         method: 'DELETE',
         headers: config.headers
@@ -53,21 +53,19 @@ export function updateAvatar(avatar) {
         headers: config.headers,
         body: JSON.stringify({avatar})
     })
-    .then(res => checkResponse(res))
-    
+    .then(res => checkResponse(res))  
 }
 
-export function setLike(cardId, likes) {
+export function setLike(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
         method: 'PUT',
-        headers: config.headers,
-        body: JSON.stringify({likes})
+        headers: config.headers
     })
     .then(res => checkResponse(res))
 }
 
 export function deleteLike(cardId) {
-    fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
         method: 'DELETE',
         headers: config.headers
     })

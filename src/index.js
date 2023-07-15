@@ -35,13 +35,9 @@ function handleProfileFormSumbit(evt) {
 function handleNewPlaceFormSubmit(evt) {
     evt.preventDefault();
 
-    const cardObj = {
-        name: utils.placeNameInput.value,
-        link: utils.linkInput.value
-    }
-    api.addNewCard(cardObj)
+    api.addNewCard(utils.placeNameInput.value, utils.linkInput.value)
         .then(cardData => {
-            const newCard = card.createCard(cardData);
+            const newCard = card.createCard(cardData, profileId);
             renderCard(newCard);
             utils.newPlaceForm.reset();
             modal.closePopup(utils.popupForPlace);

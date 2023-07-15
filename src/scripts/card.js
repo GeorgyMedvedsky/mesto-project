@@ -2,12 +2,9 @@ import * as api from './api.js';
 import * as modal from './modal.js';
 import * as utils from './utils.js';
 
-export function deleteCardFromUser(button) {
+export function deleteCard(button) {
     button.closest('.card').remove();
 }
-// export function likeCard(button) {
-//     button.classList.toggle('like-button_active');
-// }
 export function showPhoto(cardImage) {
     utils.popupImg.src = cardImage.src;
     utils.popupImg.alt = cardImage.alt;
@@ -18,25 +15,32 @@ export function setDeleteButton(button, cardData, profileId) {
     if(cardData.owner._id === profileId) {
         button.classList.remove('delete-button_hidden');
         button.addEventListener('click', () => {
-            api.deleteCardFromServer(cardData._id)
-            deleteCardFromUser(button);
+            api.deleteCard(cardData._id)
+                .then(() => {
+                    deleteCard(button);
+                })
+                .catch(err => console.error(err));
         });
         
     } else {
         button.classList.add('delete-button_hidden');
     }
 }
-export function setLikeButton(button, cardData, profileId) {
-        button.addEventListener('click', () => {
-            cardData.likes.forEach(userLike => {
-                if(userLike._id === profileId) {
-                    button.classList.add('like-button_active');
-                    api.setLike(cardData._id, cardData.likes);
-                } else {
-                    button.classList.remove('like-button_active');
-                    api.deleteLike(cardData._id);
-                }
-            })
+export function setLikeButton(button, cardData, likes) {
+    button.addEventListener('click', () => {
+            if(button.classList.contains('like-button_active')) {
+                api.deleteLike(cardData._id)
+                    .then(res => {
+                        button.classList.remove('like-button_active');
+                        likes.textContent = res.likes.length;
+                    })
+            } else {
+                api.setLike(cardData._id)
+                    .then(res => {
+                        button.classList.add('like-button_active');
+                        likes.textContent = res.likes.length;
+                    })
+            }
     });
 }
 
@@ -58,7 +62,7 @@ export function createCard(cardData, profileId) {
     likes.textContent = cardData.likes.length;
 
     setDeleteButton(deleteBtn, cardData, profileId);
-    setLikeButton(likeBtn, cardData, profileId);
+    setLikeButton(likeBtn, cardData, likes);
     setFullPhoto(cardImage);
 
     return cardElement;
