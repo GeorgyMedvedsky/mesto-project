@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/GeorgyMedvedsky/mesto-project/issues"
   },
-  "homepage": "https://github.com/GeorgyMedvedsky/mesto-project",
+  "homepage": "",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
