@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/GeorgyMedvedsky/mesto-project.git"
   },
   "author": "Georgy Medvesky",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/GeorgyMedvedsky/mesto-project/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/GeorgyMedvedsky/mesto-project",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
