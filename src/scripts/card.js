@@ -26,7 +26,12 @@ export function setDeleteButton(button, cardData, profileId) {
         button.classList.add('delete-button_hidden');
     }
 }
-export function setLikeButton(button, cardData, likes) {
+export function setLikeButton(button, cardData, likes, profileId) {
+    cardData.likes.forEach(item => {
+        if(item._id === profileId) {
+            button.classList.add('like-button_active');
+        }
+    })
     button.addEventListener('click', () => {
             if(button.classList.contains('like-button_active')) {
                 api.deleteLike(cardData._id)
@@ -62,7 +67,7 @@ export function createCard(cardData, profileId) {
     likes.textContent = cardData.likes.length;
 
     setDeleteButton(deleteBtn, cardData, profileId);
-    setLikeButton(likeBtn, cardData, likes);
+    setLikeButton(likeBtn, cardData, likes, profileId);
     setFullPhoto(cardImage);
 
     return cardElement;
