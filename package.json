@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GeorgyMedvedsky/mesto-project.git"
+    "url": ""
   },
   "author": "Georgy Medvesky",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.8.1",
     "cssnano": "^6.0.1",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",
@@ -35,7 +36,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "core-js": "^3.31.0",
-    "gh-pages": "^5.0.0"
+    "core-js": "^3.31.0"
   }
 }
