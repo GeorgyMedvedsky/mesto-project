@@ -15,8 +15,15 @@
     cursor: pointer;
 }
 
-.popup__submit:hover{
-    opacity: .8;
+@media(hover:hover){
+    .popup__submit:hover{
+        opacity: .8;
+    }
+}
+@media(hover:none){
+    .popup__submit:active{
+        opacity: .8;
+    }
 }
 
 @media screen and (min-width: 1024px) {

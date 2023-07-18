@@ -8,6 +8,14 @@
     transition: opacity .3s;
     background: url('../../images/like-button_disabled.svg') center/contain no-repeat;
 }
-.like-button:hover{
-    opacity: .5;
+
+@media(hover:hover){
+    .like-button:hover{
+        opacity: .5;
+    }
+}
+@media(hover:none){
+    .like-button:active{
+        opacity: .5;
+    }
 }

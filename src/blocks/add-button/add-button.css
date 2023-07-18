@@ -11,8 +11,15 @@
     transition: opacity .3s;
 }
 
-.add-button:hover{
-    opacity: .6;
+@media(hover:hover){
+    .add-button:hover{
+        opacity: .5;
+    }
+}
+@media(hover:none){
+    .add-button:active{
+        opacity: .5;
+    }
 }
 
 @media screen and (min-width: 1024px) {

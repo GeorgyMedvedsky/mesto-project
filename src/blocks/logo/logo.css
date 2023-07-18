@@ -5,8 +5,15 @@
     cursor: pointer;
 }
 
-.logo:hover{
-    opacity: .5;
+@media(hover:hover){
+    .logo:hover{
+        opacity: .5;
+    }
+}
+@media(hover:none){
+    .logo:active{
+        opacity: .5;
+    }
 }
 
 @media screen and (min-width: 768px) {
