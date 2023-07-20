@@ -12,6 +12,7 @@
 **Ссылки**
 
 * [Mesto GP](https://georgymedvedsky.github.io/mesto-project/)
+* Второй напарник - sazonovnnn@yandex.ru | https://github.com/sazonov-dev
 
 **Технологии**
 

@@ -22,7 +22,7 @@ export const popupForAvatar = document.querySelector('.popup-avatar');
 export const avatarForm = document.forms.avatar;
 export const avatarInput = avatarForm.elements.avatar;
 //Cards
-export const cardTemplate = document.querySelector('#card').content;
+export const cardTemplate = document.querySelector('#card');
 export const cardsContainer = document.querySelector('.cards__list');
 //Buttons
 export const editButton = document.querySelector('.edit-button');

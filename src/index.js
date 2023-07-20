@@ -1,9 +1,11 @@
 import * as modal from './scripts/modal.js';
-import * as validation from './scripts/validation.js';
-import * as api from './scripts/api.js';
-import * as card from './scripts/card.js';
+import { api } from './scripts/api.js';
 import * as utils from './scripts/utils.js';
 import './pages/index.css';
+import {Card} from './scripts/card.js';
+import {FormValidator} from './scripts/validation.js';
+
+console.log(Card)
 
 let profileId = undefined;
 
@@ -22,11 +24,13 @@ function renderCard(cardItem){
 function handleProfileFormSumbit(evt) {
     evt.preventDefault();
     
+    console.log(evt.target.closest('.popup__form'))
+    
     api.setProfileData(utils.nameInput.value, utils.jobInput.value)
         .then(() => {
             utils.profileName.textContent = utils.nameInput.value;
             utils.profileJob.textContent = utils.jobInput.value;
-            validation.disableButtonSumbit(utils.submitBtnForProfile, true);
+            //validation.disableButtonSumbit(utils.submitBtnForProfile, true);
             modal.closePopup(utils.popupForProfile);
         })
         .catch(err => console.error(err)); 
@@ -37,7 +41,8 @@ function handleNewPlaceFormSubmit(evt) {
 
     api.addNewCard(utils.placeNameInput.value, utils.linkInput.value)
         .then(cardData => {
-            const newCard = card.createCard(cardData, profileId);
+            const card = new Card(cardData, '#card');
+            const newCard = card.createCard(profileId);
             renderCard(newCard);
             utils.newPlaceForm.reset();
             modal.closePopup(utils.popupForPlace);
@@ -75,13 +80,26 @@ utils.newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
 utils.avatar.addEventListener('click', () => modal.openPopup(utils.popupForAvatar));
 utils.avatarForm.addEventListener('submit', handleUpdateAvatar);
 
-validation.enableValidation({
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit',
-    inactiveButtonClass: 'popup__submit_inactive',
-    inputErrorClass: 'popup__input_type_error',
-});
+function startValidation() {
+    const formList = Array.from(document.querySelectorAll('.popup__form'));
+    const formatedList = formList.map((form) => {
+        console.log(form.name) /// dsadsakdkaskd
+    });
+    console.log(formatedList)
+    formList.forEach(formElement => {
+        const formValidator = new FormValidator({
+            formSelector: '.popup__form',
+            inputSelector: '.popup__input',
+            submitButtonSelector: '.popup__submit',
+            inactiveButtonClass: 'popup__submit_inactive',
+            inputErrorClass: 'popup__input_type_error',
+        }, formElement)
+
+        formValidator.enableValidation();
+    });
+}
+
+startValidation();
 
 Promise.all([getProfileData(), getInitialCards()])
     .then(([resProfileData, resInitialCards]) => {
@@ -91,7 +109,8 @@ Promise.all([getProfileData(), getInitialCards()])
         profileId = resProfileData._id;
 
         resInitialCards.forEach(cardItem => {
-            const newCard = card.createCard(cardItem, profileId);
+            const card = new Card(cardItem, "#card");
+            const newCard = card.createCard(profileId);
 
             renderCard(newCard);
         });
