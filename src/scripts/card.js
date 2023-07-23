@@ -1,6 +1,5 @@
 import { api } from './api.js';
-import * as modal from './modal.js';
-import * as utils from './utils.js';
+import {popupWithImageClass} from '../index.js'
 
 export class Card {
     constructor(cardData, selector) {
@@ -9,14 +8,9 @@ export class Card {
         this._profileId = null;
     }
 
-    _getTemplate() {
-        const templateElement = document.querySelector(this._selector).content.cloneNode(true);
-        return templateElement;
-    }
-
     createCard(profileId) {
         this._profileId = profileId;
-        this._element = this._getTemplate();
+        this._element = this._getElement();
         
         const cardName = this._element.querySelector('.card__name');
         const cardImage = this._element.querySelector('.card__image');
@@ -34,6 +28,11 @@ export class Card {
         this._setFullPhoto(cardImage);
     
         return this._element;
+    }
+
+    _getElement() {
+        const templateElement = document.querySelector(this._selector).content.cloneNode(true);
+        return templateElement;
     }
 
     _setDeleteButton(button) {
@@ -54,13 +53,6 @@ export class Card {
 
     _deleteCard(button) {
         button.closest('.card').remove();
-    }
-
-    _showPhoto(cardImage) {
-        utils.popupImg.src = cardImage.src;
-        utils.popupImg.alt = cardImage.alt;
-        utils.popupDescription.textContent = cardImage.alt;
-        modal.openPopup(utils.popupForPhoto);
     }
 
     _setLikeButton(button, likes) {
@@ -87,6 +79,6 @@ export class Card {
     }
     
     _setFullPhoto(cardImage) {
-        cardImage.addEventListener('click', () => this._showPhoto(cardImage));
+        cardImage.addEventListener('click', () => popupWithImageClass.openPopup(cardImage));
     }
 }
