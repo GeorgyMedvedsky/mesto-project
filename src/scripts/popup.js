@@ -6,13 +6,13 @@ export class Popup {
     }
     openPopup(){
         this.selector.classList.add('popup_opened');
-        document.addEventListener('keydown', (evt) => this._closeByEsc(evt));
+        document.addEventListener('keydown', this._handleEscClose);
     }
     closePopup(){
         this.selector.classList.remove('popup_opened');
-        document.removeEventListener('keydown', (evt) => this._closeByEsc(evt));
+        document.removeEventListener('keydown', this._handleEscClose);
     }
-    _closeByEsc(evt) {
+    _handleEscClose(evt) {
         if(evt.key === 'Escape') {
             const openedPopup = document.querySelector('.popup_opened');
             this.closePopup(openedPopup);
@@ -37,7 +37,7 @@ export class PopupWithImage extends Popup {
         utils.popupDescription.textContent = cardImage.alt;
 
         this.selector.classList.add('popup_opened');
-        document.addEventListener('keydown', (evt) => this._closeByEsc(evt));
+        document.addEventListener('keydown', (evt) => this._handleEscClose(evt));
     }
 }
 
@@ -65,7 +65,7 @@ export class PopupWithForm extends Popup {
 
     closePopup(){
         this.selector.classList.remove('popup_opened');
-        document.removeEventListener('keydown', (evt) => this._closeByEsc(evt));
+        document.removeEventListener('keydown', (evt) => this._handleEscClose(evt));
         this.selector.querySelector('.popup__form').reset()
     }
 }
