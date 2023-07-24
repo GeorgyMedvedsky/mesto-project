@@ -33,33 +33,34 @@ export class Card {
         return templateElement;
     }
 
-    _deleteCard(deleteBtn) {
-        deleteBtn.closest('.card').remove();
-    }
-
+    
     _setEventListeners(deleteBtn, likeBtn, likes, cardImage) {
-        this._deleteBtnListener(deleteBtn);
-        this._likeBtnListener(likeBtn, likes);
-        this._fullPhotoListener(cardImage);
+        this._deleteCard(deleteBtn);
+        this._toggleLike(likeBtn, likes);
+        this._handleImageClick(cardImage);
     }
 
-    _deleteBtnListener(deleteBtn) {
+    _deleteCard(deleteBtn) {
         if(this._cardData.owner._id === this._profileId) {
             deleteBtn.classList.remove('delete-button_hidden');
             deleteBtn.addEventListener('click', () => {
-                api.deleteCard(this._cardData._id)
+                api.deleteCardFromServ(this._cardData._id)
                     .then(() => {
-                        this._deleteCard(deleteBtn);
+                        this._deleteCardFromUser(deleteBtn);
                     })
                     .catch(err => console.error(err));
-            });
+                });
             
         } else {
             deleteBtn.classList.add('delete-button_hidden');
         }
     }
+    
+    _deleteCardFromUser(deleteBtn) {
+        deleteBtn.closest('.card').remove();
+    }
 
-    _likeBtnListener(likeBtn, likes) {
+    _toggleLike(likeBtn, likes) {
         this._cardData.likes.forEach(item => {
             if(item._id === this._profileId) {
                 likeBtn.classList.add('like-button_active');
@@ -83,8 +84,8 @@ export class Card {
             }
         });
     }
-    
-    _fullPhotoListener(cardImage) {
+
+    _handleImageClick(cardImage) {
         cardImage.addEventListener('click', () => popupWithImageClass.openPopup(cardImage));
     }
 }

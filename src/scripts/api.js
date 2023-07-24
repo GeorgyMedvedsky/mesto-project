@@ -39,7 +39,7 @@ class Api {
         .then(res => this._checkResponse(res))
     }
 
-    deleteCard(cardId) {
+    deleteCardFromServ(cardId) {
         return fetch(`${this.config.baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this.config.headers
