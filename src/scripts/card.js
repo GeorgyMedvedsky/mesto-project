@@ -6,6 +6,10 @@ export class Card {
         this._cardData = cardData;
         this._selector = selector;
         this._profileId = null;
+        this._cardImage = null;
+        this._deleteBtn = null;
+        this._likeBtn = null;
+        this._likes = null;
     }
 
     createCard(profileId) {
@@ -17,13 +21,17 @@ export class Card {
         const deleteBtn = this._element.querySelector('.delete-button');
         const likeBtn = this._element.querySelector('.like-button');
         const likes = this._element.querySelector('.like-button__likes');
+        this._cardImage = cardImage;
+        this._deleteBtn = deleteBtn;
+        this._likeBtn = likeBtn;
+        this._likes = likes;
         
         cardImage.src = this._cardData.link;
         cardImage.alt = this._cardData.name;
         cardName.textContent = this._cardData.name;
         likes.textContent = this._cardData.likes.length;
     
-        this._setEventListeners(deleteBtn, likeBtn, likes, cardImage);
+        this._setEventListeners();
     
         return this._element;
     }
@@ -34,58 +42,58 @@ export class Card {
     }
 
     
-    _setEventListeners(deleteBtn, likeBtn, likes, cardImage) {
-        this._deleteCard(deleteBtn);
-        this._toggleLike(likeBtn, likes);
-        this._handleImageClick(cardImage);
+    _setEventListeners() {
+        this._deleteCard();
+        this._toggleLike();
+        this._handleImageClick();
     }
 
-    _deleteCard(deleteBtn) {
+    _deleteCard() {
         if(this._cardData.owner._id === this._profileId) {
-            deleteBtn.classList.remove('delete-button_hidden');
-            deleteBtn.addEventListener('click', () => {
+            this._deleteBtn.classList.remove('delete-button_hidden');
+            this._deleteBtn.addEventListener('click', () => {
                 api.deleteCardFromServ(this._cardData._id)
                     .then(() => {
-                        this._deleteCardFromUser(deleteBtn);
+                        this._deleteCardFromUser();
                     })
                     .catch(err => console.error(err));
                 });
             
         } else {
-            deleteBtn.classList.add('delete-button_hidden');
+            this._deleteBtn.classList.add('delete-button_hidden');
         }
     }
     
-    _deleteCardFromUser(deleteBtn) {
-        deleteBtn.closest('.card').remove();
+    _deleteCardFromUser() {
+        this._deleteBtn.closest('.card').remove();
     }
 
-    _toggleLike(likeBtn, likes) {
+    _toggleLike() {
         this._cardData.likes.forEach(item => {
             if(item._id === this._profileId) {
-                likeBtn.classList.add('like-button_active');
+                this._likeBtn.classList.add('like-button_active');
             }
         })
-        likeBtn.addEventListener('click', () => {
-            if(likeBtn.classList.contains('like-button_active')) {
+        this._likeBtn.addEventListener('click', () => {
+            if(this._likeBtn.classList.contains('like-button_active')) {
                 api.deleteLike(this._cardData._id)
                     .then(res => {
-                        likeBtn.classList.remove('like-button_active');
-                        likes.textContent = res.likes.length;
+                        this._likeBtn.classList.remove('like-button_active');
+                        this._likes.textContent = res.likes.length;
                     })
                     .catch(err => console.error(err));
             } else {
                 api.setLike(this._cardData._id)
                     .then(res => {
-                        likeBtn.classList.add('like-button_active');
-                        likes.textContent = res.likes.length;
+                        this._likeBtn.classList.add('like-button_active');
+                        this._likes.textContent = res.likes.length;
                     })
                     .catch(err => console.error(err));
             }
         });
     }
 
-    _handleImageClick(cardImage) {
-        cardImage.addEventListener('click', () => popupWithImageClass.openPopup(cardImage));
+    _handleImageClick() {
+        this._cardImage.addEventListener('click', () => popupWithImageClass.openPopup(this._cardImage));
     }
 }
