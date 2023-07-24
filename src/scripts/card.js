@@ -68,12 +68,14 @@ export class Card {
                             button.classList.remove('like-button_active');
                             likes.textContent = res.likes.length;
                         })
+                        .catch(err => console.error(err));
                 } else {
                     api.setLike(this._cardData._id)
                         .then(res => {
                             button.classList.add('like-button_active');
                             likes.textContent = res.likes.length;
                         })
+                        .catch(err => console.error(err));
                 }
         });
     }
