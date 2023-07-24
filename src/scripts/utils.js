@@ -27,3 +27,12 @@ export const cardsContainer = document.querySelector('.cards__list');
 export const editButton = document.querySelector('.edit-button');
 export const addButton = document.querySelector('.add-button');
 export const submitBtnForProfile = profileForm.querySelector('.popup__submit');
+
+export const validationSelectors = {
+        formSelector: '.popup__form',
+        inputSelector: '.popup__input',
+        submitButtonSelector: '.popup__submit',
+        inactiveButtonClass: 'popup__submit_inactive',
+        inputErrorClass: 'popup__input_type_error',
+        cardSelectorId: '#card'
+    }

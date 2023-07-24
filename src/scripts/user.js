@@ -9,7 +9,7 @@ export class UserInfo {
     }
 
     getUserInfo() {
-        return api.getProfileData();
+        return {name: this._name, about: this._about}
     }
 
     setUserInfo(name, about) {
@@ -17,8 +17,8 @@ export class UserInfo {
         this._about = about;
         api.setProfileData(this._name, this._about)
             .then(() => {
-                utils.profileName.textContent = utils.nameInput.value;
-                utils.profileJob.textContent = utils.jobInput.value;
+                utils.profileName.textContent = this._name;
+                utils.profileJob.textContent = this._about;
                 profilePopupWithForm.closePopup(utils.popupForProfile);
             })
             .catch(err => console.error(err)); 

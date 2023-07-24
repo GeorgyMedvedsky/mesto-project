@@ -3,7 +3,9 @@ import { api } from './scripts/api.js';
 import {Card} from './scripts/card.js';
 import {FormValidator} from './scripts/validation.js';
 import {Section} from './scripts/section.js';
-import {Popup, PopupWithImage, PopupWithForm} from './scripts/popup.js';
+import {Popup} from './scripts/popup.js';
+import { PopupWithForm } from './scripts/popupWithForm.js';
+import { PopupWithImage } from './scripts/popupWithImage.js';
 import {UserInfo} from './scripts/user.js';
 import './pages/index.css';
 
@@ -23,16 +25,20 @@ let userData;
 
 function handleProfileFormSumbit(evt) {
     evt.preventDefault();
+
+    const {name, job} = profilePopupWithForm.getInputValues();
     
-    userData.setUserInfo(utils.nameInput.value, utils.jobInput.value);
+    userData.setUserInfo(name, job);
 }
 
 function handleNewPlaceFormSubmit(evt) {
     evt.preventDefault();
 
-    api.addNewCard(utils.placeNameInput.value, utils.linkInput.value)
+    const {placeName, link} = placePopupWithForm.getInputValues();
+
+    api.addNewCard(placeName, link)
         .then(cardData => {
-            const card = new Card(cardData, '#card');
+            const card = new Card(cardData, utils.validationSelectors.cardSelectorId);
             const newCard = card.createCard(profileId);   
             const addCard = new Section({}, utils.cardsContainer);
             addCard.addItem(newCard);
@@ -44,7 +50,9 @@ function handleNewPlaceFormSubmit(evt) {
 function handleUpdateAvatar(evt) {
     evt.preventDefault()
 
-    api.updateAvatar(utils.avatarInput.value)
+    const {avatar} = placePopupWithForm.getInputValues();
+
+    api.updateAvatar(avatar)
         .then(data => {
             data.avatar = utils.avatarInput.value;
             utils.avatar.src = utils.avatarInput.value;
@@ -87,13 +95,7 @@ utils.avatar.addEventListener('click', () => avatarPopupLink.openPopup(utils.pop
 function startValidation() {
     const formList = Array.from(document.querySelectorAll('.popup__form'));
     formList.forEach(formElement => {
-        const formValidator = new FormValidator({
-            formSelector: '.popup__form',
-            inputSelector: '.popup__input',
-            submitButtonSelector: '.popup__submit',
-            inactiveButtonClass: 'popup__submit_inactive',
-            inputErrorClass: 'popup__input_type_error',
-        }, formElement)
+        const formValidator = new FormValidator(utils.validationSelectors, formElement)
 
         switch (formElement.id) {
             case 'profile': 
@@ -122,7 +124,7 @@ Promise.all([api.getProfileData(), api.getInitialCards()])
         userData = new UserInfo(resProfileData.name, resProfileData.about)
 
         const createdCards = resInitialCards.map(cardItem => {
-            const card = new Card(cardItem, "#card");
+            const card = new Card(cardItem, utils.validationSelectors.cardSelectorId);
             return card.createCard(profileId);
         });
         
