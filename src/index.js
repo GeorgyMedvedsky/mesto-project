@@ -22,12 +22,21 @@ let placePopupWithForm;
 let avatarPopupWithForm;
 let userData;
 
-function handleProfileFormSumbit(evt) { //dffdfsfgdsa
+function handleProfileFormSumbit(evt) {
     evt.preventDefault();
 
     const {name, job} = profilePopupWithForm.getInputValues();
     
-    userData.setUserInfo(name, job);
+    api.setProfileData(name, job)
+        .then((profileData) => {
+            userData.setUserInfo(profileData);
+            utils.profileName.textContent = name;
+            utils.profileJob.textContent = job;
+            profilePopupWithForm.closePopup(utils.popupForProfile);
+        })
+        .catch(err => console.error(err));
+    
+    
 }
 
 function handleNewPlaceFormSubmit(evt) {
@@ -88,18 +97,6 @@ function startValidation() {
     const formList = Array.from(document.querySelectorAll('.popup__form'));
     formList.forEach(formElement => {
         const formValidator = new FormValidator(utils.validationSelectors, formElement)
-        
-        // switch (formElement.id) {
-        //     case 'profile': 
-        //         profileClassLink = formValidator;
-        //         break;
-        //     case 'newPlace': 
-        //         placeClassLink = formValidator;
-        //         break;
-        //     case 'avatar': 
-        //         avatarClassLink = formValidator;
-        //         break;
-        // }
 
         formValidator.enableValidation();
     });
@@ -113,7 +110,7 @@ Promise.all([api.getProfileData(), api.getInitialCards()])
         utils.profileJob.textContent = resProfileData.about;
         utils.avatar.src = resProfileData.avatar;
         profileId = resProfileData._id;
-        userData = new UserInfo(resProfileData.name, resProfileData.about)
+        userData = new UserInfo(resProfileData);
 
         const createdCards = resInitialCards.map(cardItem => {
             const card = new Card(cardItem, utils.validationSelectors.cardSelectorId, api, popupWithImageClass);
