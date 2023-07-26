@@ -3,27 +3,26 @@ import { api } from './scripts/api.js';
 import {Card} from './scripts/card.js';
 import {FormValidator} from './scripts/validation.js';
 import {Section} from './scripts/section.js';
-import {Popup} from './scripts/popup.js';
 import { PopupWithForm } from './scripts/popupWithForm.js';
 import { PopupWithImage } from './scripts/popupWithImage.js';
 import {UserInfo} from './scripts/user.js';
 import './pages/index.css';
 
 let profileId;
-let profileClassLink;
-let avatarClassLink;
-let placeClassLink;
-let profilePopupLink;
-let placePopupLink;
+// let profileClassLink;
+// let avatarClassLink;
+// let placeClassLink;
+// let profilePopupLink;
+// let placePopupLink;
 export let imagePopupLink;
-let avatarPopupLink;
+// let avatarPopupLink;
 export let popupWithImageClass;
 export let profilePopupWithForm;
 let placePopupWithForm;
 let avatarPopupWithForm;
 let userData;
 
-function handleProfileFormSumbit(evt) {
+function handleProfileFormSumbit(evt) { //dffdfsfgdsa
     evt.preventDefault();
 
     const {name, job} = profilePopupWithForm.getInputValues();
@@ -50,64 +49,57 @@ function handleNewPlaceFormSubmit(evt) {
 function handleUpdateAvatar(evt) {
     evt.preventDefault()
 
-    const {avatar} = placePopupWithForm.getInputValues();
+    const {avatar} = avatarPopupWithForm.getInputValues();
+    
 
     api.updateAvatar(avatar)
         .then(data => {
-            data.avatar = utils.avatarInput.value;
-            utils.avatar.src = utils.avatarInput.value;
+            data.avatar = avatar;
+            utils.avatar.src = avatar;
             avatarPopupWithForm.closePopup(utils.popupForAvatar);
         })
         .catch(err => console.error(err));
 }
 
 utils.popups.forEach((popup) => {
-    const popupClass = new Popup(popup);
-
     if (popup.classList.contains('popup-profile')) {
-        profilePopupLink = popupClass;
         profilePopupWithForm = new PopupWithForm(popup, handleProfileFormSumbit)
         profilePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-new-place')) {
-        placePopupLink = popupClass;
         placePopupWithForm = new PopupWithForm(popup, handleNewPlaceFormSubmit)
         placePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-photo')) {
-        imagePopupLink = popupClass;
         popupWithImageClass = new PopupWithImage(popup, utils.popupImg, utils.popupDescription);
     } else if (popup.classList.contains('popup-avatar')) {
-        avatarPopupLink = popupClass;
         avatarPopupWithForm = new PopupWithForm(popup, handleUpdateAvatar)
         avatarPopupWithForm.setEventListeners()
     }
-
-    popupClass.setEventListeners()
 })
 
 utils.editButton.addEventListener('click', () => {
     utils.nameInput.value = utils.profileName.textContent;
     utils.jobInput.value = utils.profileJob.textContent;
-    profilePopupLink.openPopup(utils.popupForProfile);
+    profilePopupWithForm.openPopup(utils.popupForProfile);
 });
-utils.addButton.addEventListener('click', () => placePopupLink.openPopup(utils.popupForPlace));
-utils.avatar.addEventListener('click', () => avatarPopupLink.openPopup(utils.popupForAvatar));
+utils.addButton.addEventListener('click', () => placePopupWithForm.openPopup(utils.popupForPlace));
+utils.avatar.addEventListener('click', () => avatarPopupWithForm.openPopup(utils.popupForAvatar));
 
 function startValidation() {
     const formList = Array.from(document.querySelectorAll('.popup__form'));
     formList.forEach(formElement => {
         const formValidator = new FormValidator(utils.validationSelectors, formElement)
-
-        switch (formElement.id) {
-            case 'profile': 
-                profileClassLink = formValidator;
-                break;
-            case 'newPlace': 
-                placeClassLink = formValidator;
-                break;
-            case 'avatar': 
-                avatarClassLink = formValidator;
-                break;
-        }
+        
+        // switch (formElement.id) {
+        //     case 'profile': 
+        //         profileClassLink = formValidator;
+        //         break;
+        //     case 'newPlace': 
+        //         placeClassLink = formValidator;
+        //         break;
+        //     case 'avatar': 
+        //         avatarClassLink = formValidator;
+        //         break;
+        // }
 
         formValidator.enableValidation();
     });
