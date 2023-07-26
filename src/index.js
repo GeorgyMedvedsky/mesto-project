@@ -9,23 +9,24 @@ import {UserInfo} from './scripts/user.js';
 import './pages/index.css';
 
 let profileId;
-// let profileClassLink;
-// let avatarClassLink;
-// let placeClassLink;
-// let profilePopupLink;
-// let placePopupLink;
+
+
+
+
+
 export let imagePopupLink;
-// let avatarPopupLink;
-export let popupWithImageClass;
+
+let popupWithImageClass;
 export let profilePopupWithForm;
 let placePopupWithForm;
 let avatarPopupWithForm;
 let userData;
+let addCard;
 
 function handleProfileFormSumbit(evt) {
     evt.preventDefault();
 
-    const {name, job} = profilePopupWithForm.getInputValues();
+    const {name, job} = profilePopupWithForm.handleSubmit();
     
     api.setProfileData(name, job)
         .then((profileData) => {
@@ -42,13 +43,12 @@ function handleProfileFormSumbit(evt) {
 function handleNewPlaceFormSubmit(evt) {
     evt.preventDefault();
 
-    const {placeName, link} = placePopupWithForm.getInputValues();
-
+    const {placeName, link} = placePopupWithForm.handleSubmit();
+    
     api.addNewCard(placeName, link)
         .then(cardData => {
             const card = new Card(cardData, utils.validationSelectors.cardSelectorId, api, popupWithImageClass);
             const newCard = card.createCard(profileId);   
-            const addCard = new Section({}, utils.cardsContainer);
             addCard.addItem(newCard);
             placePopupWithForm.closePopup(utils.popupForPlace);
         })
@@ -58,9 +58,8 @@ function handleNewPlaceFormSubmit(evt) {
 function handleUpdateAvatar(evt) {
     evt.preventDefault()
 
-    const {avatar} = avatarPopupWithForm.getInputValues();
+    const {avatar} = avatarPopupWithForm.handleSubmit();
     
-
     api.updateAvatar(avatar)
         .then(data => {
             data.avatar = avatar;
@@ -117,7 +116,7 @@ Promise.all([api.getProfileData(), api.getInitialCards()])
             return card.createCard(profileId);
         });
         
-        const addCard = new Section({items: createdCards, renderer: (item) => {
+        addCard = new Section({items: createdCards, renderer: (item) => {
             addCard.addItem(item);
         }}, utils.cardsContainer);
 
