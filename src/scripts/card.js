@@ -1,8 +1,5 @@
-import { api } from './api.js';
-import {popupWithImageClass} from '../index.js'
-
 export class Card {
-    constructor(cardData, selector) {
+    constructor(cardData, selector, api, popupImg) {
         this._cardData = cardData;
         this._selector = selector;
         this._profileId = null;
@@ -10,6 +7,8 @@ export class Card {
         this._deleteBtn = null;
         this._likeBtn = null;
         this._likes = null;
+        this._api = api;
+        this._popupImg = popupImg;
     }
 
     createCard(profileId) {
@@ -52,7 +51,7 @@ export class Card {
         if(this._cardData.owner._id === this._profileId) {
             this._deleteBtn.classList.remove('delete-button_hidden');
             this._deleteBtn.addEventListener('click', () => {
-                api.deleteCardFromServ(this._cardData._id)
+                this._api.deleteCardFromServ(this._cardData._id)
                     .then(() => {
                         this._deleteCardFromUser();
                     })
@@ -76,14 +75,14 @@ export class Card {
         })
         this._likeBtn.addEventListener('click', () => {
             if(this._likeBtn.classList.contains('like-button_active')) {
-                api.deleteLike(this._cardData._id)
+                this._api.deleteLike(this._cardData._id)
                     .then(res => {
                         this._likeBtn.classList.remove('like-button_active');
                         this._likes.textContent = res.likes.length;
                     })
                     .catch(err => console.error(err));
             } else {
-                api.setLike(this._cardData._id)
+                this._api.setLike(this._cardData._id)
                     .then(res => {
                         this._likeBtn.classList.add('like-button_active');
                         this._likes.textContent = res.likes.length;
@@ -94,6 +93,6 @@ export class Card {
     }
 
     _handleImageClick() {
-        this._cardImage.addEventListener('click', () => popupWithImageClass.openPopup(this._cardImage));
+        this._cardImage.addEventListener('click', () => this._popupImg.openPopup(this._cardImage));
     }
 }

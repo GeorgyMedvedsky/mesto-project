@@ -1,15 +1,16 @@
-import * as utils from './utils.js';
 import { Popup } from './popup.js';
 
 export class PopupWithImage extends Popup {
-    constructor(element) {
+    constructor(element, popupImg, popupDescription) {
         super(element);
+        this._image = popupImg;
+        this._description = popupDescription;
     }
 
     openPopup(cardImage) {
-        utils.popupImg.src = cardImage.src;
-        utils.popupImg.alt = cardImage.alt;
-        utils.popupDescription.textContent = cardImage.alt;
+        this._image.src = cardImage.src;
+        this._image.alt = cardImage.alt;
+        this._description.textContent = cardImage.alt;
 
         super.openPopup();
     }

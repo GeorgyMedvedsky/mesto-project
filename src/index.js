@@ -38,7 +38,7 @@ function handleNewPlaceFormSubmit(evt) {
 
     api.addNewCard(placeName, link)
         .then(cardData => {
-            const card = new Card(cardData, utils.validationSelectors.cardSelectorId);
+            const card = new Card(cardData, utils.validationSelectors.cardSelectorId, api, popupWithImageClass);
             const newCard = card.createCard(profileId);   
             const addCard = new Section({}, utils.cardsContainer);
             addCard.addItem(newCard);
@@ -74,7 +74,7 @@ utils.popups.forEach((popup) => {
         placePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-photo')) {
         imagePopupLink = popupClass;
-        popupWithImageClass = new PopupWithImage(popup);
+        popupWithImageClass = new PopupWithImage(popup, utils.popupImg, utils.popupDescription);
     } else if (popup.classList.contains('popup-avatar')) {
         avatarPopupLink = popupClass;
         avatarPopupWithForm = new PopupWithForm(popup, handleUpdateAvatar)
@@ -124,7 +124,7 @@ Promise.all([api.getProfileData(), api.getInitialCards()])
         userData = new UserInfo(resProfileData.name, resProfileData.about)
 
         const createdCards = resInitialCards.map(cardItem => {
-            const card = new Card(cardItem, utils.validationSelectors.cardSelectorId);
+            const card = new Card(cardItem, utils.validationSelectors.cardSelectorId, api, popupWithImageClass);
             return card.createCard(profileId);
         });
         
