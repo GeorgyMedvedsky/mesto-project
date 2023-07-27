@@ -4,11 +4,13 @@ export const popupForProfile = document.querySelector('.popup-profile');
 export const profileForm = document.forms.profile;
 export const nameInput = profileForm.elements.name;
 export const jobInput = profileForm.elements.job;
+export const profileSubmit = profileForm.elements.profileSubmit;
 //Popup for new place
 export const popupForPlace = document.querySelector('.popup-new-place');
 export const newPlaceForm = document.forms.newPlace;
 export const placeNameInput = newPlaceForm.elements.placeName;
 export const linkInput = newPlaceForm.elements.link;
+export const newPlaceSubmit = profileForm.elements.newPlaceSubmit;
 //Popup for photo
 export const popupForPhoto = document.querySelector('.popup-photo');
 export const popupImg = popupForPhoto.querySelector('.popup__img');
@@ -21,6 +23,7 @@ export const avatar = document.querySelector('.profile__avatar');
 export const popupForAvatar = document.querySelector('.popup-avatar');
 export const avatarForm = document.forms.avatar;
 export const avatarInput = avatarForm.elements.avatar;
+export const avatarSubmit = avatarForm.elements.avatarSubmit;
 //Cards
 export const cardsContainer = document.querySelector('.cards__list');
 //Buttons

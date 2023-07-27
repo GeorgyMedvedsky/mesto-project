@@ -20,7 +20,6 @@ let avatarPopupWithForm;
 Promise.all([api.getProfileData(), api.getInitialCards()])
     .then(([resProfileData, resInitialCards]) => {
         userData = new UserInfo(resProfileData);
-        infoObj = userData.getUserInfo();
     
         utils.profileName.textContent = userData.getUserInfo().name;
         utils.profileJob.textContent = userData.getUserInfo().about;
@@ -54,10 +53,12 @@ function handleProfileFormSumbit(evt) {
             userData.setUserInfo(profileData);
             utils.profileName.textContent = userData.getUserInfo().name;
             utils.profileJob.textContent = userData.getUserInfo().about;
-            profilePopupWithForm.closePopup(utils.popupForProfile);
+            profilePopupWithForm.closePopup();
         })
         .catch(err => console.error(err))
-        .finally()
+        .finally(() => {
+            utils.profileSubmit.value = 'Сохранение...';
+        })
 }
 
 function handleNewPlaceFormSubmit(evt) {
@@ -71,7 +72,10 @@ function handleNewPlaceFormSubmit(evt) {
             addCard.addItem(card);
             placePopupWithForm.closePopup(utils.popupForPlace);
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(() => {
+            utils.newPlaceSubmit.value = 'Сохранение...';
+        })
 }
 
 function handleUpdateAvatar(evt) {
@@ -86,7 +90,11 @@ function handleUpdateAvatar(evt) {
             avatarPopupWithForm.closePopup(utils.popupForAvatar);
         })
         .catch(err => console.error(err))
+        .finally(() => {
+            utils.avatarSubmit.value = 'Сохранение...';
+        })
 }
+console.log()
 
 utils.popups.forEach((popup) => {
     if (popup.classList.contains('popup-profile')) {
