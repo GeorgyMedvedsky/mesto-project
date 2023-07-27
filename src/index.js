@@ -24,9 +24,9 @@ function handleProfileFormSumbit(evt) {
     
     api.setProfileData(name, job)
     .then((profileData) => {
-        userData.setUserInfo(profileData);
-            utils.profileName.textContent = name;
-            utils.profileJob.textContent = job;
+            userData.setUserInfo(profileData);
+            utils.profileName.textContent = userData.getUserInfo().name;
+            utils.profileJob.textContent = userData.getUserInfo().about;
             profilePopupWithForm.closePopup(utils.popupForProfile);
         })
         .catch(err => console.error(err));
@@ -55,11 +55,11 @@ function handleUpdateAvatar(evt) {
     
     api.updateAvatar(avatar)
         .then(data => {
-            data.avatar = avatar;
-            utils.avatar.src = avatar;
+            userData.setUserInfo(data);
+            utils.avatar.src = userData.getUserInfo().avatar;
             avatarPopupWithForm.closePopup(utils.popupForAvatar);
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
 }
 
 // function createCard(item) {
@@ -104,11 +104,12 @@ startValidation();
 
 Promise.all([api.getProfileData(), api.getInitialCards()])
     .then(([resProfileData, resInitialCards]) => {
-        utils.profileName.textContent = resProfileData.name;
-        utils.profileJob.textContent = resProfileData.about;
-        utils.avatar.src = resProfileData.avatar;
-        profileId = resProfileData._id;
         userData = new UserInfo(resProfileData);
+
+        utils.profileName.textContent = userData.getUserInfo().name;
+        utils.profileJob.textContent = userData.getUserInfo().about;
+        utils.avatar.src = userData.getUserInfo().avatar;
+        profileId = userData.getUserInfo()._id;
 
         const createdCards = resInitialCards.map(cardItem => {
             const card = new Card(cardItem, utils.validationSelectors.cardSelectorId, api, popupWithImage);

@@ -7,7 +7,7 @@ export class UserInfo {
     }
 
     getUserInfo() {
-        return {name: this._name, about: this._about, avatar: this._avatar, id: this._id};
+        return {name: this._name, about: this._about, avatar: this._avatar, _id: this._id};
     }
 
     setUserInfo({name, about, avatar, _id}) {
