@@ -23,15 +23,13 @@ function handleProfileFormSumbit(evt) {
     const {name, job} = profilePopupWithForm.handleSubmit();
     
     api.setProfileData(name, job)
-        .then((profileData) => {
-            userData.setUserInfo(profileData);
+    .then((profileData) => {
+        userData.setUserInfo(profileData);
             utils.profileName.textContent = name;
             utils.profileJob.textContent = job;
             profilePopupWithForm.closePopup(utils.popupForProfile);
         })
         .catch(err => console.error(err));
-    
-    
 }
 
 function handleNewPlaceFormSubmit(evt) {
@@ -41,6 +39,7 @@ function handleNewPlaceFormSubmit(evt) {
     
     api.addNewCard(placeName, link)
         .then(cardData => {
+            
             const card = new Card(cardData, utils.validationSelectors.cardSelectorId, api, popupWithImage);
             const newCard = card.createCard(profileId);   
             addCard.addItem(newCard);
@@ -62,6 +61,11 @@ function handleUpdateAvatar(evt) {
         })
         .catch(err => console.error(err));
 }
+
+// function createCard(item) {
+//     const newCard = new Card(item, '#card', api, popupWithImage);
+//     return newCard.createCard(profileId)
+// }
 
 utils.popups.forEach((popup) => {
     if (popup.classList.contains('popup-profile')) {
