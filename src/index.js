@@ -11,6 +11,7 @@ import './pages/index.css';
 let profileId;
 let userData;
 let addCard;
+let infoObj;
 
 let popupWithImage;
 let profilePopupWithForm;
@@ -20,11 +21,12 @@ let avatarPopupWithForm;
 Promise.all([api.getProfileData(), api.getInitialCards()])
     .then(([resProfileData, resInitialCards]) => {
         userData = new UserInfo(resProfileData);
+        infoObj = userData.getUserInfo();
 
-        utils.profileName.textContent = userData.getUserInfo().name;
-        utils.profileJob.textContent = userData.getUserInfo().about;
-        utils.avatar.src = userData.getUserInfo().avatar;
-        profileId = userData.getUserInfo()._id;
+        utils.profileName.textContent = infoObj.name;
+        utils.profileJob.textContent = infoObj.about;
+        utils.avatar.src = infoObj.avatar;
+        profileId = infoObj._id;
 
         const createdCards = resInitialCards.map(cardItem => {
             return createCard(cardItem);
@@ -51,11 +53,12 @@ function handleProfileFormSumbit(evt) {
     api.setProfileData(name, job)
     .then((profileData) => {
             userData.setUserInfo(profileData);
-            utils.profileName.textContent = userData.getUserInfo().name;
-            utils.profileJob.textContent = userData.getUserInfo().about;
+            utils.profileName.textContent = infoObj.name;
+            utils.profileJob.textContent = infoObj.about;
             profilePopupWithForm.closePopup(utils.popupForProfile);
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally()
 }
 
 function handleNewPlaceFormSubmit(evt) {
@@ -80,7 +83,7 @@ function handleUpdateAvatar(evt) {
     api.updateAvatar(avatar)
         .then(data => {
             userData.setUserInfo(data);
-            utils.avatar.src = userData.getUserInfo().avatar;
+            utils.avatar.src = infoObj.avatar;
             avatarPopupWithForm.closePopup(utils.popupForAvatar);
         })
         .catch(err => console.error(err))
@@ -103,8 +106,8 @@ utils.popups.forEach((popup) => {
 })
 
 utils.editButton.addEventListener('click', () => {
-    utils.nameInput.value = userData.getUserInfo().name;
-    utils.jobInput.value = userData.getUserInfo().about;
+    utils.nameInput.value = infoObj.name;
+    utils.jobInput.value = infoObj.about;
     profilePopupWithForm.openPopup(utils.popupForProfile);
 });
 utils.addButton.addEventListener('click', () => placePopupWithForm.openPopup(utils.popupForPlace));
