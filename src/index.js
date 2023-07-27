@@ -12,7 +12,7 @@ let profileId;
 let userData;
 let addCard;
 
-let popupWithImageForm;
+let popupWithImage;
 let profilePopupWithForm;
 let placePopupWithForm;
 let avatarPopupWithForm;
@@ -41,7 +41,7 @@ function handleNewPlaceFormSubmit(evt) {
     
     api.addNewCard(placeName, link)
         .then(cardData => {
-            const card = new Card(cardData, utils.validationSelectors.cardSelectorId, api, popupWithImageForm);
+            const card = new Card(cardData, utils.validationSelectors.cardSelectorId, api, popupWithImage);
             const newCard = card.createCard(profileId);   
             addCard.addItem(newCard);
             placePopupWithForm.closePopup(utils.popupForPlace);
@@ -65,16 +65,16 @@ function handleUpdateAvatar(evt) {
 
 utils.popups.forEach((popup) => {
     if (popup.classList.contains('popup-profile')) {
-        profilePopupWithForm = new PopupWithForm(popup, handleProfileFormSumbit)
+        profilePopupWithForm = new PopupWithForm('.popup-profile', handleProfileFormSumbit)
         profilePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-new-place')) {
-        placePopupWithForm = new PopupWithForm(popup, handleNewPlaceFormSubmit)
+        placePopupWithForm = new PopupWithForm('.popup-new-place', handleNewPlaceFormSubmit)
         placePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-photo')) {
-        popupWithImageForm = new PopupWithImage(popup, utils.popupImg, utils.popupDescription);
-        popupWithImageForm.setEventListeners();
+        popupWithImage = new PopupWithImage('.popup-photo', utils.popupImg, utils.popupDescription);
+        popupWithImage.setEventListeners();
     } else if (popup.classList.contains('popup-avatar')) {
-        avatarPopupWithForm = new PopupWithForm(popup, handleUpdateAvatar)
+        avatarPopupWithForm = new PopupWithForm('.popup-avatar', handleUpdateAvatar)
         avatarPopupWithForm.setEventListeners()
     }
 })
@@ -107,7 +107,7 @@ Promise.all([api.getProfileData(), api.getInitialCards()])
         userData = new UserInfo(resProfileData);
 
         const createdCards = resInitialCards.map(cardItem => {
-            const card = new Card(cardItem, utils.validationSelectors.cardSelectorId, api, popupWithImageForm);
+            const card = new Card(cardItem, utils.validationSelectors.cardSelectorId, api, popupWithImage);
             return card.createCard(profileId);
         });
         
