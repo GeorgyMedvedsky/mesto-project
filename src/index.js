@@ -9,9 +9,8 @@ import {UserInfo} from './scripts/user.js';
 import './pages/index.css';
 
 let profileId;
-
-
-
+let userData;
+let addCard;
 
 
 export let imagePopupLink;
@@ -20,8 +19,6 @@ let popupWithImageClass;
 export let profilePopupWithForm;
 let placePopupWithForm;
 let avatarPopupWithForm;
-let userData;
-let addCard;
 
 function handleProfileFormSumbit(evt) {
     evt.preventDefault();
@@ -78,6 +75,7 @@ utils.popups.forEach((popup) => {
         placePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-photo')) {
         popupWithImageClass = new PopupWithImage(popup, utils.popupImg, utils.popupDescription);
+        popupWithImageClass.setEventListeners();
     } else if (popup.classList.contains('popup-avatar')) {
         avatarPopupWithForm = new PopupWithForm(popup, handleUpdateAvatar)
         avatarPopupWithForm.setEventListeners()

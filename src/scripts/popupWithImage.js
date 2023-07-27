@@ -8,10 +8,9 @@ export class PopupWithImage extends Popup {
     }
 
     openPopup(cardImage) {
+        super.openPopup();
         this._image.src = cardImage.src;
         this._image.alt = cardImage.alt;
         this._description.textContent = cardImage.alt;
-
-        super.openPopup();
     }
 }

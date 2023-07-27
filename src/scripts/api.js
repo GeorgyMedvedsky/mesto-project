@@ -7,69 +7,65 @@ class Api {
         return !res.ok ? Promise.reject(`Ошибка: ${res.status}`) : res.json();
     }
 
+    _request(url, options) {
+        return fetch(url, options).then(this._checkResponse)
+      }
+
     getInitialCards() {
-        return fetch(`${this.config.baseUrl}/cards`, {
+        return this._request(`${this.config.baseUrl}/cards`, {
             headers: this.config.headers
         })
-        .then(res => this._checkResponse(res))
     }
 
     getProfileData() {
-        return fetch(`${this.config.baseUrl}/users/me`, {
+        return this._request(`${this.config.baseUrl}/users/me`, {
             headers: this.config.headers
         })
-        .then(res => this._checkResponse(res))
     }
 
     setProfileData(name, about) {
-        return fetch(`${this.config.baseUrl}/users/me`, {
+        return this._request(`${this.config.baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.config.headers,
             body: JSON.stringify({name, about})
         })
-        .then(res => this._checkResponse(res))
     }
 
     addNewCard(name, link) {
-        return fetch(`${this.config.baseUrl}/cards`, {
+        return this._request(`${this.config.baseUrl}/cards`, {
             method: 'POST',
             headers: this.config.headers,
             body: JSON.stringify({name, link})
         })
-        .then(res => this._checkResponse(res))
     }
 
     deleteCardFromServ(cardId) {
-        return fetch(`${this.config.baseUrl}/cards/${cardId}`, {
+        return this._request(`${this.config.baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this.config.headers
         })
-        .then(res => this._checkResponse(res))
     }
 
     updateAvatar(avatar) {
-        return fetch(`${this.config.baseUrl}/users/me/avatar`, {
+        return this._request(`${this.config.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this.config.headers,
             body: JSON.stringify({avatar})
         })
-        .then(res => this._checkResponse(res))  
     }
 
     setLike(cardId) {
-        return fetch(`${this.config.baseUrl}/cards/likes/${cardId}`, {
+        return this._request(`${this.config.baseUrl}/cards/likes/${cardId}`, {
             method: 'PUT',
             headers: this.config.headers
         })
-        .then(res => this._checkResponse(res))
     }
 
     deleteLike(cardId) {
-        return fetch(`${this.config.baseUrl}/cards/likes/${cardId}`, {
+        return this._request(`${this.config.baseUrl}/cards/likes/${cardId}`, {
             method: 'DELETE',
             headers: this.config.headers
         })
-        .then(res => this._checkResponse(res))
     }
 
 }
