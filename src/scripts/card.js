@@ -2,11 +2,6 @@ export class Card {
     constructor(cardData, selector, api, popupImg) {
         this._cardData = cardData;
         this._selector = selector;
-        this._profileId = null;
-        this._cardImage = null;
-        this._deleteBtn = null;
-        this._likeBtn = null;
-        this._likes = null;
         this._api = api;
         this._popupImg = popupImg;
     }
@@ -15,20 +10,16 @@ export class Card {
         this._profileId = profileId;
         this._element = this._getElement();
         
-        const cardName = this._element.querySelector('.card__name');
-        const cardImage = this._element.querySelector('.card__image');
-        const deleteBtn = this._element.querySelector('.delete-button');
-        const likeBtn = this._element.querySelector('.like-button');
-        const likes = this._element.querySelector('.like-button__likes');
-        this._cardImage = cardImage;
-        this._deleteBtn = deleteBtn;
-        this._likeBtn = likeBtn;
-        this._likes = likes;
+        this._cardName = this._element.querySelector('.card__name');
+        this._cardImage = this._element.querySelector('.card__image');
+        this._deleteBtn = this._element.querySelector('.delete-button');
+        this._likeBtn = this._element.querySelector('.like-button');
+        this._numberOfLikes = this._element.querySelector('.like-button__likes');
         
-        cardImage.src = this._cardData.link;
-        cardImage.alt = this._cardData.name;
-        cardName.textContent = this._cardData.name;
-        likes.textContent = this._cardData.likes.length;
+        this._cardImage.src = this._cardData.link;
+        this._cardImage.alt = this._cardData.name;
+        this._cardName.textContent = this._cardData.name;
+        this._numberOfLikes.textContent = this._cardData.likes.length;
     
         this._setEventListeners();
     
@@ -78,14 +69,14 @@ export class Card {
                 this._api.deleteLike(this._cardData._id)
                     .then(res => {
                         this._likeBtn.classList.remove('like-button_active');
-                        this._likes.textContent = res.likes.length;
+                        this._numberOfLikes.textContent = res.likes.length;
                     })
                     .catch(err => console.error(err));
             } else {
                 this._api.setLike(this._cardData._id)
                     .then(res => {
                         this._likeBtn.classList.add('like-button_active');
-                        this._likes.textContent = res.likes.length;
+                        this._numberOfLikes.textContent = res.likes.length;
                     })
                     .catch(err => console.error(err));
             }
