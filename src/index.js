@@ -17,6 +17,32 @@ let profilePopupWithForm;
 let placePopupWithForm;
 let avatarPopupWithForm;
 
+Promise.all([api.getProfileData(), api.getInitialCards()])
+    .then(([resProfileData, resInitialCards]) => {
+        userData = new UserInfo(resProfileData);
+
+        utils.profileName.textContent = userData.getUserInfo().name;
+        utils.profileJob.textContent = userData.getUserInfo().about;
+        utils.avatar.src = userData.getUserInfo().avatar;
+        profileId = userData.getUserInfo()._id;
+
+        const createdCards = resInitialCards.map(cardItem => {
+            return createCard(cardItem);
+        });
+        
+        addCard = new Section({items: createdCards, renderer: (item) => {
+            addCard.addItem(item);
+        }}, utils.cardsContainer);
+
+        addCard.renderer()
+    })
+    .catch(err => console.error(err));
+
+function createCard(item) {
+    const newCard = new Card(item, '#card', api, popupWithImage);
+    return newCard.createCard(profileId)
+}
+
 function handleProfileFormSumbit(evt) {
     evt.preventDefault();
 
@@ -39,10 +65,8 @@ function handleNewPlaceFormSubmit(evt) {
     
     api.addNewCard(placeName, link)
         .then(cardData => {
-            
-            const card = new Card(cardData, utils.validationSelectors.cardSelectorId, api, popupWithImage);
-            const newCard = card.createCard(profileId);   
-            addCard.addItem(newCard);
+            const card = createCard(cardData)
+            addCard.addItem(card);
             placePopupWithForm.closePopup(utils.popupForPlace);
         })
         .catch(err => console.error(err));
@@ -62,11 +86,6 @@ function handleUpdateAvatar(evt) {
         .catch(err => console.error(err))
 }
 
-// function createCard(item) {
-//     const newCard = new Card(item, '#card', api, popupWithImage);
-//     return newCard.createCard(profileId)
-// }
-
 utils.popups.forEach((popup) => {
     if (popup.classList.contains('popup-profile')) {
         profilePopupWithForm = new PopupWithForm('.popup-profile', handleProfileFormSumbit)
@@ -84,8 +103,8 @@ utils.popups.forEach((popup) => {
 })
 
 utils.editButton.addEventListener('click', () => {
-    utils.nameInput.value = utils.profileName.textContent;
-    utils.jobInput.value = utils.profileJob.textContent;
+    utils.nameInput.value = userData.getUserInfo().name;
+    utils.jobInput.value = userData.getUserInfo().about;
     profilePopupWithForm.openPopup(utils.popupForProfile);
 });
 utils.addButton.addEventListener('click', () => placePopupWithForm.openPopup(utils.popupForPlace));
@@ -101,25 +120,3 @@ function startValidation() {
 }
 
 startValidation();
-
-Promise.all([api.getProfileData(), api.getInitialCards()])
-    .then(([resProfileData, resInitialCards]) => {
-        userData = new UserInfo(resProfileData);
-
-        utils.profileName.textContent = userData.getUserInfo().name;
-        utils.profileJob.textContent = userData.getUserInfo().about;
-        utils.avatar.src = userData.getUserInfo().avatar;
-        profileId = userData.getUserInfo()._id;
-
-        const createdCards = resInitialCards.map(cardItem => {
-            const card = new Card(cardItem, utils.validationSelectors.cardSelectorId, api, popupWithImage);
-            return card.createCard(profileId);
-        });
-        
-        addCard = new Section({items: createdCards, renderer: (item) => {
-            addCard.addItem(item);
-        }}, utils.cardsContainer);
-
-        addCard.renderer()
-    })
-    .catch(err => console.error(err));
