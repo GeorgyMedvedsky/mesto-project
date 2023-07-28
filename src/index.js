@@ -44,6 +44,10 @@ function createCard(item) {
     return newCard.createCard(profileId)
 }
 
+function finallyChangeBtn(btn) {
+    btn.value = 'Сохранение...';
+}
+
 function handleProfileFormSumbit(evt) {
     evt.preventDefault();
 
@@ -59,7 +63,7 @@ function handleProfileFormSumbit(evt) {
         })
         .catch(err => console.error(err))
         .finally(() => {
-            utils.profileSubmit.value = 'Сохранение...';
+            finallyChangeBtn(utils.profileSubmit);
         })
 }
 
@@ -76,7 +80,7 @@ function handleNewPlaceFormSubmit(evt) {
         })
         .catch(err => console.error(err))
         .finally(() => {
-            utils.newPlaceSubmit.value = 'Сохранение...';
+            finallyChangeBtn(utils.newPlaceSubmit);
         })
 }
 
@@ -94,7 +98,7 @@ function handleUpdateAvatar(evt) {
         })
         .catch(err => console.error(err))
         .finally(() => {
-            utils.avatarSubmit.value = 'Сохранение...';
+            finallyChangeBtn(utils.avatarSubmit);
         })
 }
 
