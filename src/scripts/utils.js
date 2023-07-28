@@ -10,7 +10,7 @@ export const popupForPlace = document.querySelector('.popup-new-place');
 export const newPlaceForm = document.forms.newPlace;
 export const placeNameInput = newPlaceForm.elements.placeName;
 export const linkInput = newPlaceForm.elements.link;
-export const newPlaceSubmit = profileForm.elements.newPlaceSubmit;
+export const newPlaceSubmit = newPlaceForm.elements.placeSubmit;
 //Popup for photo
 export const popupForPhoto = document.querySelector('.popup-photo');
 export const popupImg = popupForPhoto.querySelector('.popup__img');

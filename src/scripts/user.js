@@ -1,19 +1,19 @@
 export class UserInfo {
     constructor({name, about, avatar, _id}){
-        this._name = name;
-        this._about = about;
-        this._avatar = avatar;
+        this.name = name;
+        this.about = about;
+        this.avatar = avatar;
         this._id = _id;
     }
 
     getUserInfo() {
-        return {name: this._name, about: this._about, avatar: this._avatar, _id: this._id};
+        return {name: this.name, about: this.about, avatar: this.avatar, _id: this._id};
     }
 
     setUserInfo({name, about, avatar, _id}) {
-        this._name = name;
-        this._about = about;
-        this._avatar = avatar;
+        this.name = name;
+        this.about = about;
+        this.avatar = avatar;
         this._id = _id;
     }
 }
