@@ -76,7 +76,7 @@ function handleNewPlaceFormSubmit(evt) {
         .then(cardData => {
             const card = createCard(cardData)
             addCard.addItem(card);
-            placePopupWithForm.closePopup(utils.popupForPlace);
+            placePopupWithForm.closePopup();
         })
         .catch(err => console.error(err))
         .finally(() => {
@@ -94,7 +94,7 @@ function handleUpdateAvatar(evt) {
             userData.setUserInfo(data);
             infoObject = userData.getUserInfo();
             utils.avatar.src = infoObject.avatar;
-            avatarPopupWithForm.closePopup(utils.popupForAvatar);
+            avatarPopupWithForm.closePopup();
         })
         .catch(err => console.error(err))
         .finally(() => {
@@ -122,10 +122,10 @@ utils.editButton.addEventListener('click', () => {
     infoObject = userData.getUserInfo();
     utils.nameInput.value = infoObject.name;
     utils.jobInput.value = infoObject.about;
-    profilePopupWithForm.openPopup(utils.popupForProfile);
+    profilePopupWithForm.openPopup();
 });
-utils.addButton.addEventListener('click', () => placePopupWithForm.openPopup(utils.popupForPlace));
-utils.avatar.addEventListener('click', () => avatarPopupWithForm.openPopup(utils.popupForAvatar));
+utils.addButton.addEventListener('click', () => placePopupWithForm.openPopup());
+utils.avatar.addEventListener('click', () => avatarPopupWithForm.openPopup());
 
 function startValidation() {
     const formList = Array.from(document.querySelectorAll('.popup__form'));
