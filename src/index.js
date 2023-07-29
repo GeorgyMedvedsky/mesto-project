@@ -110,7 +110,7 @@ utils.popups.forEach((popup) => {
         placePopupWithForm = new PopupWithForm('.popup-new-place', handleNewPlaceFormSubmit)
         placePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-photo')) {
-        popupWithImage = new PopupWithImage('.popup-photo', utils.popupImg, utils.popupDescription);
+        popupWithImage = new PopupWithImage('.popup-photo');
         popupWithImage.setEventListeners();
     } else if (popup.classList.contains('popup-avatar')) {
         avatarPopupWithForm = new PopupWithForm('.popup-avatar', handleUpdateAvatar)
