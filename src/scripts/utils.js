@@ -11,10 +11,6 @@ export const newPlaceForm = document.forms.newPlace;
 export const placeNameInput = newPlaceForm.elements.placeName;
 export const linkInput = newPlaceForm.elements.link;
 export const newPlaceSubmit = newPlaceForm.elements.placeSubmit;
-//Popup for photo
-export const popupForPhoto = document.querySelector('.popup-photo');
-export const popupImg = popupForPhoto.querySelector('.popup__img');
-export const popupDescription = popupForPhoto.querySelector('.popup__description');
 //Profile
 export const profileName = document.querySelector('.profile__name');
 export const profileJob = document.querySelector('.profile__job');

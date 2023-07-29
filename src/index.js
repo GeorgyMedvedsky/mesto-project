@@ -111,7 +111,7 @@ utils.popups.forEach((popup) => {
         placePopupWithForm.setEventListeners()
     } else if (popup.classList.contains('popup-photo')) {
         popupWithImage = new PopupWithImage('.popup-photo');
-        popupWithImage.setEventListeners();
+        popupWithImage.setEventListeners()
     } else if (popup.classList.contains('popup-avatar')) {
         avatarPopupWithForm = new PopupWithForm('.popup-avatar', handleUpdateAvatar)
         avatarPopupWithForm.setEventListeners()
