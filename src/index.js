@@ -8,10 +8,9 @@ import { PopupWithImage } from './scripts/popupWithImage.js';
 import {UserInfo} from './scripts/user.js';
 import './pages/index.css';
 
-let profileId;
-let userData;
 let infoObject;
 let addCard;
+let userData;
 
 let popupWithImage;
 let profilePopupWithForm;
@@ -21,11 +20,7 @@ let avatarPopupWithForm;
 Promise.all([api.getProfileData(), api.getInitialCards()])
     .then(([resProfileData, resInitialCards]) => {
         userData = new UserInfo(resProfileData);
-        getUpdateinfo()
-        utils.profileName.textContent = infoObject.name;
-        utils.profileJob.textContent = infoObject.about;
-        utils.avatar.src = infoObject.avatar;
-        profileId = infoObject._id;
+        userData.setUserInfo(resProfileData, {name: utils.profileName, job: utils.profileJob, avatar: utils.avatar})
 
         const createdCards = resInitialCards.map(cardItem => {
             return createCard(cardItem);
@@ -41,7 +36,8 @@ Promise.all([api.getProfileData(), api.getInitialCards()])
 
 function createCard(item) {
     const newCard = new Card(item, '#card', api, popupWithImage);
-    return newCard.createCard(profileId)
+    const {_id} = userData.getUserInfo()
+    return newCard.createCard(_id)
 }
 
 function changeBtnValue(btn) {
@@ -59,10 +55,7 @@ function handleProfileFormSumbit(evt) {
     
     api.setProfileData(name, job)
     .then((profileData) => {
-            userData.setUserInfo(profileData);
-            getUpdateinfo()
-            utils.profileName.textContent = infoObject.name;
-            utils.profileJob.textContent = infoObject.about;
+            userData.setUserInfo(profileData, {name: utils.profileName, job: utils.profileJob});
             profilePopupWithForm.closePopup();
         })
         .catch(err => console.error(err))
@@ -95,9 +88,7 @@ function handleUpdateAvatar(evt) {
     
     api.updateAvatar(avatar)
         .then(data => {
-            userData.setUserInfo(data);
-            getUpdateinfo()
-            utils.avatar.src = infoObject.avatar;
+            userData.setUserInfo(data, {avatar: utils.avatar});
             avatarPopupWithForm.closePopup();
         })
         .catch(err => console.error(err))
