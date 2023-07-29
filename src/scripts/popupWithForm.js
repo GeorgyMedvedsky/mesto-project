@@ -6,6 +6,7 @@ export class PopupWithForm extends Popup {
         this._callback = callback;
         this._inputList = Array.from(this._element.querySelectorAll('.popup__input'));
         this._form = this._element.querySelector('.popup__form');
+        this._submitBtn = this._form.querySelector('.popup__submit');
     }
 
     handleSubmit() {
@@ -15,7 +16,6 @@ export class PopupWithForm extends Popup {
     setEventListeners() {
         super.setEventListeners();
         this._element.addEventListener('submit', (evt) => this._callback(evt))
-        this._form.reset();
     }
 
     _getInputValues() {
@@ -25,5 +25,16 @@ export class PopupWithForm extends Popup {
         })
         
         return this._inputsData;
+    }
+
+    openPopup() {
+        super.openPopup()
+        if(this._submitBtn.id === 'place-submit') this._submitBtn.value = 'Создать'
+        else this._submitBtn.value = 'Сохранить'
+    }
+
+    closePopup() {
+        super.closePopup()
+        this._form.reset()
     }
 }

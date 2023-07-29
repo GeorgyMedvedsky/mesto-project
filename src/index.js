@@ -21,7 +21,7 @@ let avatarPopupWithForm;
 Promise.all([api.getProfileData(), api.getInitialCards()])
     .then(([resProfileData, resInitialCards]) => {
         userData = new UserInfo(resProfileData);
-        infoObject = userData.getUserInfo();
+        getUpdateinfo()
         utils.profileName.textContent = infoObject.name;
         utils.profileJob.textContent = infoObject.about;
         utils.avatar.src = infoObject.avatar;
@@ -44,8 +44,12 @@ function createCard(item) {
     return newCard.createCard(profileId)
 }
 
-function finallyChangeBtn(btn) {
+function changeBtnValue(btn) {
     btn.value = 'Сохранение...';
+}
+
+function getUpdateinfo() {
+    return infoObject = userData.getUserInfo();
 }
 
 function handleProfileFormSumbit(evt) {
@@ -56,14 +60,14 @@ function handleProfileFormSumbit(evt) {
     api.setProfileData(name, job)
     .then((profileData) => {
             userData.setUserInfo(profileData);
-            infoObject = userData.getUserInfo();
+            getUpdateinfo()
             utils.profileName.textContent = infoObject.name;
             utils.profileJob.textContent = infoObject.about;
             profilePopupWithForm.closePopup();
         })
         .catch(err => console.error(err))
         .finally(() => {
-            finallyChangeBtn(utils.profileSubmit);
+            changeBtnValue(utils.profileSubmit);
         })
 }
 
@@ -80,7 +84,7 @@ function handleNewPlaceFormSubmit(evt) {
         })
         .catch(err => console.error(err))
         .finally(() => {
-            finallyChangeBtn(utils.newPlaceSubmit);
+            changeBtnValue(utils.newPlaceSubmit);
         })
 }
 
@@ -92,13 +96,13 @@ function handleUpdateAvatar(evt) {
     api.updateAvatar(avatar)
         .then(data => {
             userData.setUserInfo(data);
-            infoObject = userData.getUserInfo();
+            getUpdateinfo()
             utils.avatar.src = infoObject.avatar;
             avatarPopupWithForm.closePopup();
         })
         .catch(err => console.error(err))
         .finally(() => {
-            finallyChangeBtn(utils.avatarSubmit);
+            changeBtnValue(utils.avatarSubmit);
         })
 }
 
@@ -119,7 +123,7 @@ utils.popups.forEach((popup) => {
 })
 
 utils.editButton.addEventListener('click', () => {
-    infoObject = userData.getUserInfo();
+    getUpdateinfo()
     utils.nameInput.value = infoObject.name;
     utils.jobInput.value = infoObject.about;
     profilePopupWithForm.openPopup();
