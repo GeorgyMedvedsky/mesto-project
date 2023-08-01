@@ -41,7 +41,7 @@
         <div class="popup popup_type_form popup-profile">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <form name="profile" class="popup__form form" novalidate>
+                <form name="profile" id="profile" class="popup__form form" novalidate>
                     <input class="popup__input popup__input_type_name" type="text" id="name-input" name="name"
                         minlength="2" maxlength="20" required pattern="[a-zA-ZА-Яа-я\- ]+$"
                         data-error-message="Разрешены только латинские и кириллические буквы, дефисы, пробелы">
@@ -50,8 +50,7 @@
                         minlength="2" maxlength="200" required pattern="[a-zA-ZА-Яа-я\- ]+$"
                         data-error-message="Разрешены только латинские и кириллические буквы, дефисы, пробелы">
                     <span class="job-input-error form_input-error"></span>
-                    <input class="popup__submit" type="submit" id="profile-submit" name="profile-submit"
-                        value="Сохранить">
+                    <input class="popup__submit" type="submit" id="profile-submit" name="profileSubmit">
                 </form>
                 <button type="button" class="popup__close-button"></button>
             </div>
@@ -59,7 +58,7 @@
         <div class="popup popup_type_form popup-new-place">
             <div class="popup__container">
                 <h2 class="popup__title">Новое место</h2>
-                <form name="newPlace" class="popup__form form" novalidate>
+                <form name="newPlace" id="newPlace" class="popup__form form" novalidate>
                     <input class="popup__input popup__input_type_place" type="text" id="place-name-input"
                         name="placeName" placeholder="Название" minlength="2" maxlength="30" required
                         pattern="[a-zA-ZА-Яа-я\- ]+$"
@@ -68,7 +67,7 @@
                     <input class="popup__input popup__input_type_link" type="url" id="place-link-input" name="link"
                         placeholder="Ссылка на картинку" required>
                     <span class="place-link-input-error form_input-error"></span>
-                    <input class="popup__submit" type="submit" id="place-submit" name="place-submit" value="Создать">
+                    <input class="popup__submit" type="submit" id="place-submit" name="placeSubmit">
                 </form>
                 <button type="button" class="popup__close-button"></button>
             </div>
@@ -85,12 +84,11 @@
         <div class="popup popup_type_avatar popup-avatar">
             <div class="popup__container">
                 <h2 class="popup__title">Обновить аватар</h2>
-                <form name="avatar" class="popup__form form" novalidate>
+                <form name="avatar" id="avatar" class="popup__form form" novalidate>
                     <input class="popup__input popup__input_type_link" type="url" id="avatar-input" name="avatar" placeholder="Ссылка на картинку" required>
                     <span class="avatar-input-error form_input-error"></span>
                     
-                    <input class="popup__submit" type="submit" id="avatar-submit" name="avatar-submit"
-                        value="Сохранить">
+                    <input class="popup__submit" type="submit" id="avatar-submit" name="avatarSubmit">
                 </form>
                 <button type="button" class="popup__close-button"></button>
             </div>

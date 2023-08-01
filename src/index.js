@@ -1,99 +1,134 @@
-import * as modal from './scripts/modal.js';
-import * as validation from './scripts/validation.js';
-import * as api from './scripts/api.js';
-import * as card from './scripts/card.js';
 import * as utils from './scripts/utils.js';
+import { api } from './scripts/api.js';
+import {Card} from './scripts/card.js';
+import {FormValidator} from './scripts/validation.js';
+import {Section} from './scripts/section.js';
+import { PopupWithForm } from './scripts/popupWithForm.js';
+import { PopupWithImage } from './scripts/popupWithImage.js';
+import {UserInfo} from './scripts/user.js';
 import './pages/index.css';
 
-let profileId = undefined;
+let infoObject;
+let addCard;
+let userData;
 
-const getProfileData = () => {
-    return api.getProfileData();
-};
+let popupWithImage;
+let profilePopupWithForm;
+let placePopupWithForm;
+let avatarPopupWithForm;
 
-const getInitialCards = () => {
-    return api.getInitialCards();
-};
+Promise.all([api.getProfileData(), api.getInitialCards()])
+    .then(([resProfileData, resInitialCards]) => {
+        userData = new UserInfo(resProfileData);
+        userData.setUserInfo(resProfileData, {name: utils.profileName, job: utils.profileJob, avatar: utils.avatar})
 
-function renderCard(cardItem){
-    utils.cardsContainer.prepend(cardItem);
+        const createdCards = resInitialCards.map(cardItem => {
+            return createCard(cardItem);
+        });
+        
+        addCard = new Section({items: createdCards, renderer: (item) => {
+            addCard.addItem(item);
+        }}, utils.cardsContainer);
+
+        addCard.renderer()
+    })
+    .catch(err => console.error(err));
+
+function createCard(item) {
+    const newCard = new Card(item, '#card', api, popupWithImage);
+    const {_id} = userData.getUserInfo()
+    return newCard.createCard(_id)
+}
+
+function changeBtnValue(btn) {
+    btn.value = 'Сохранение...';
+}
+
+function getUpdateinfo() {
+    return infoObject = userData.getUserInfo();
 }
 
 function handleProfileFormSumbit(evt) {
     evt.preventDefault();
+
+    const {name, job} = profilePopupWithForm.handleSubmit();
     
-    api.setProfileData(utils.nameInput.value, utils.jobInput.value)
-        .then(() => {
-            utils.profileName.textContent = utils.nameInput.value;
-            utils.profileJob.textContent = utils.jobInput.value;
-            validation.disableButtonSumbit(utils.submitBtnForProfile, true);
-            modal.closePopup(utils.popupForProfile);
+    api.setProfileData(name, job)
+    .then((profileData) => {
+            userData.setUserInfo(profileData, {name: utils.profileName, job: utils.profileJob});
+            profilePopupWithForm.closePopup();
         })
-        .catch(err => console.error(err)); 
+        .catch(err => console.error(err))
+        .finally(() => {
+            changeBtnValue(utils.profileSubmit);
+        })
 }
 
 function handleNewPlaceFormSubmit(evt) {
     evt.preventDefault();
 
-    api.addNewCard(utils.placeNameInput.value, utils.linkInput.value)
+    const {placeName, link} = placePopupWithForm.handleSubmit();
+    
+    api.addNewCard(placeName, link)
         .then(cardData => {
-            const newCard = card.createCard(cardData, profileId);
-            renderCard(newCard);
-            utils.newPlaceForm.reset();
-            modal.closePopup(utils.popupForPlace);
+            const card = createCard(cardData)
+            addCard.addItem(card);
+            placePopupWithForm.closePopup();
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(() => {
+            changeBtnValue(utils.newPlaceSubmit);
+        })
 }
 
 function handleUpdateAvatar(evt) {
     evt.preventDefault()
 
-    api.updateAvatar(utils.avatarInput.value)
+    const {avatar} = avatarPopupWithForm.handleSubmit();
+    
+    api.updateAvatar(avatar)
         .then(data => {
-            data.avatar = utils.avatarInput.value;
-            utils.avatar.src = utils.avatarInput.value;
-            utils.avatarForm.reset();
-            modal.closePopup(utils.popupForAvatar);
+            userData.setUserInfo(data, {avatar: utils.avatar});
+            avatarPopupWithForm.closePopup();
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(() => {
+            changeBtnValue(utils.avatarSubmit);
+        })
 }
 
 utils.popups.forEach((popup) => {
-    popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) modal.closePopup(popup);
-        if (evt.target.classList.contains('popup__close-button')) modal.closePopup(popup);
-    });
+    if (popup.classList.contains('popup-profile')) {
+        profilePopupWithForm = new PopupWithForm('.popup-profile', handleProfileFormSumbit)
+        profilePopupWithForm.setEventListeners()
+    } else if (popup.classList.contains('popup-new-place')) {
+        placePopupWithForm = new PopupWithForm('.popup-new-place', handleNewPlaceFormSubmit)
+        placePopupWithForm.setEventListeners()
+    } else if (popup.classList.contains('popup-photo')) {
+        popupWithImage = new PopupWithImage('.popup-photo');
+        popupWithImage.setEventListeners()
+    } else if (popup.classList.contains('popup-avatar')) {
+        avatarPopupWithForm = new PopupWithForm('.popup-avatar', handleUpdateAvatar)
+        avatarPopupWithForm.setEventListeners()
+    }
 })
+
 utils.editButton.addEventListener('click', () => {
-    utils.nameInput.value = utils.profileName.textContent;
-    utils.jobInput.value = utils.profileJob.textContent;
-    modal.openPopup(utils.popupForProfile);
+    getUpdateinfo()
+    utils.nameInput.value = infoObject.name;
+    utils.jobInput.value = infoObject.about;
+    profilePopupWithForm.openPopup();
 });
-utils.addButton.addEventListener('click', () => modal.openPopup(utils.popupForPlace));
-utils.profileForm.addEventListener('submit', handleProfileFormSumbit);
-utils.newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
-utils.avatar.addEventListener('click', () => modal.openPopup(utils.popupForAvatar));
-utils.avatarForm.addEventListener('submit', handleUpdateAvatar);
+utils.addButton.addEventListener('click', () => placePopupWithForm.openPopup());
+utils.avatar.addEventListener('click', () => avatarPopupWithForm.openPopup());
 
-validation.enableValidation({
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit',
-    inactiveButtonClass: 'popup__submit_inactive',
-    inputErrorClass: 'popup__input_type_error',
-});
+function startValidation() {
+    const formList = Array.from(document.querySelectorAll('.popup__form'));
+    formList.forEach(formElement => {
+        const formValidator = new FormValidator(utils.validationSelectors, formElement)
 
-Promise.all([getProfileData(), getInitialCards()])
-    .then(([resProfileData, resInitialCards]) => {
-        utils.profileName.textContent = resProfileData.name;
-        utils.profileJob.textContent = resProfileData.about;
-        utils.avatar.src = resProfileData.avatar;
-        profileId = resProfileData._id;
+        formValidator.enableValidation();
+    });
+}
 
-        resInitialCards.forEach(cardItem => {
-            const newCard = card.createCard(cardItem, profileId);
-
-            renderCard(newCard);
-        });
-    })
-    .catch(err => console.error(err));
+startValidation();
