@@ -1,26 +1,8 @@
-# Проект: Место
+# Mesto
 
-### Обзор
+Mesto - это интерактивная веб-страница, где пользователи могут добавлять, удалять и ставить лайки фотографий.  
+[Mesto gh-pages](https://georgymedvedsky.github.io/mesto-project/)
 
-* Описание
-* Ссылки
-* Технологии
-
-**Описание**
-Учебный проект Mesto - интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки.
-
-**Ссылки**
-
-* [Mesto GP](https://georgymedvedsky.github.io/mesto-project/)
-* Второй напарник - sazonovnnn@yandex.ru | https://github.com/sazonov-dev
-
-**Технологии**
-
-* HTML
-* CSS
-* Flexbox
-* Grid Layout
-* Adaptive Layout
-* JS
-* Webpack
-* Rest API
+Данная версия отличается от одноименного [проекта](https://github.com/GeorgyMedvedsky/mesto-project-ff) подходом к его реализации
+Разработка велась в парадигме ООП двумя разработчиками
+Напарник - sazonovnnn@yandex.ru | https://github.com/sazonov-dev
